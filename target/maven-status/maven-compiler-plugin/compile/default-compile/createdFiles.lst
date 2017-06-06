@@ -1,0 +1,11 @@
+tk\housem8\housem8\entities\RoomClass.class
+tk\housem8\housem8\controllers\ApiRestController.class
+tk\housem8\housem8\entities\RoomClass_.class
+tk\housem8\housem8\entities\House_.class
+tk\housem8\housem8\entities\Room.class
+tk\housem8\housem8\controllers\MainController.class
+tk\housem8\housem8\repos\RoomRepository.class
+tk\housem8\housem8\repos\HouseRepository.class
+tk\housem8\housem8\entities\Room_.class
+tk\housem8\housem8\entities\House.class
+tk\housem8\housem8\Housem8Application.class
