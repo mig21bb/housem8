@@ -6,12 +6,14 @@
 package tk.housem8.housem8.repos;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import tk.housem8.housem8.entities.Room;
 
 /**
  *
  * @author Administrador
  */
-public interface RoomRepository extends CrudRepository<Room, Long> {
+@CrossOrigin
+public interface RoomRepository extends CrudRepository<Room, Integer> {
     
 }

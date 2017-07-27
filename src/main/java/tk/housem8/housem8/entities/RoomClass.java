@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -51,9 +52,10 @@ public class RoomClass implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "category")
     private String category;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rOOMCLASSid")
+    /*
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rOOMCLASSid",fetch = FetchType.LAZY)
     private List<Room> roomList;
-
+*/
     public RoomClass() {
     }
 
@@ -90,7 +92,7 @@ public class RoomClass implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
-
+/*
     @XmlTransient
     public List<Room> getRoomList() {
         return roomList;
@@ -99,7 +101,7 @@ public class RoomClass implements Serializable {
     public void setRoomList(List<Room> roomList) {
         this.roomList = roomList;
     }
-
+*/
     @Override
     public int hashCode() {
         int hash = 0;

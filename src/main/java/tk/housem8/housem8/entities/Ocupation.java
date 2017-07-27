@@ -5,6 +5,7 @@
  */
 package tk.housem8.housem8.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -51,10 +52,12 @@ public class Ocupation implements Serializable {
     private Date endDate;
     @JoinColumn(name = "MATE_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Mate mATEid;
+    @JsonBackReference
+    private Mate mateId;
     @JoinColumn(name = "ROOM_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Room rOOMid;
+    @JsonBackReference
+    private Room roomId;
 
     public Ocupation() {
     }
@@ -92,20 +95,20 @@ public class Ocupation implements Serializable {
         this.endDate = endDate;
     }
 
-    public Mate getMATEid() {
-        return mATEid;
+    public Mate getMateId() {
+        return mateId;
     }
 
-    public void setMATEid(Mate mATEid) {
-        this.mATEid = mATEid;
+    public void setMateId(Mate mateId) {
+        this.mateId = mateId;
     }
 
-    public Room getROOMid() {
-        return rOOMid;
+    public Room getRoomId() {
+        return roomId;
     }
 
-    public void setROOMid(Room rOOMid) {
-        this.rOOMid = rOOMid;
+    public void setRoomId(Room roomId) {
+        this.roomId = roomId;
     }
 
     @Override

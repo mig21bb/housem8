@@ -5,11 +5,13 @@
  */
 package tk.housem8.housem8.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -35,7 +37,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Cost.findByDescription", query = "SELECT c FROM Cost c WHERE c.description = :description"),
     @NamedQuery(name = "Cost.findByPeriod", query = "SELECT c FROM Cost c WHERE c.period = :period"),
     @NamedQuery(name = "Cost.findByDatetime", query = "SELECT c FROM Cost c WHERE c.datetime = :datetime"),
+    @NamedQuery(name = "Cost.findByHouseId", query = "SELECT c FROM Cost c WHERE c.houseId = :houseId"),
     @NamedQuery(name = "Cost.findByAmount", query = "SELECT c FROM Cost c WHERE c.amount = :amount")})
+
 public class Cost implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,13 +61,22 @@ public class Cost implements Serializable {
     private Float amount;
     @JoinColumn(name = "COST_FAMILY_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private CostFamily cOSTFAMILYid;
-    @JoinColumn(name = "HOUSE_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private House hOUSEid;
-    @JoinColumn(name = "MATE_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Mate mATEid;
+    private CostFamily costFamily;
+    @JoinColumn(name = "house_id", referencedColumnName = "id")
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @JsonBackReference    
+    private House houseId;
+    
+    @JoinColumn(name = "mate_id", referencedColumnName = "id")
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Mate mateId;
+    
+//    @Column(name = "house_id")
+//    private Integer houseId;
+//    
+//    @Column(name = "mate_id")
+//    private Integer mateId;
 
     public Cost() {
     }
@@ -112,29 +125,49 @@ public class Cost implements Serializable {
         this.amount = amount;
     }
 
-    public CostFamily getCOSTFAMILYid() {
-        return cOSTFAMILYid;
+    public CostFamily getCostFamily() {
+        return costFamily;
     }
 
-    public void setCOSTFAMILYid(CostFamily cOSTFAMILYid) {
-        this.cOSTFAMILYid = cOSTFAMILYid;
+    public void setCostFamily(CostFamily costFamily) {
+        this.costFamily = costFamily;
     }
 
-    public House getHOUSEid() {
-        return hOUSEid;
+  /* */
+    public House getHouseId() {
+        return houseId;
     }
 
-    public void setHOUSEid(House hOUSEid) {
-        this.hOUSEid = hOUSEid;
+    public void setHouseId(House houseId) {
+        this.houseId = houseId;
     }
-
-    public Mate getMATEid() {
-        return mATEid;
+    
+    public Mate getMateId() {
+    return mateId;
     }
-
-    public void setMATEid(Mate mATEid) {
-        this.mATEid = mATEid;
+    public void setMateId(Mate mateId) {
+    this.mateId = mateId;
     }
+   
+     
+//
+//    public Integer getHouseId() {
+//        return houseId;
+//    }
+//
+//    public void setHouseId(Integer houseId) {
+//        this.houseId = houseId;
+//    }
+//
+//    public Integer getMateId() {
+//        return mateId;
+//    }
+//
+//    public void setMateId(Integer mateId) {
+//        this.mateId = mateId;
+//    }
+  
+    
 
     @Override
     public int hashCode() {
@@ -160,5 +193,5 @@ public class Cost implements Serializable {
     public String toString() {
         return "tk.housem8.housem8.entities.Cost[ id=" + id + " ]";
     }
-    
+
 }

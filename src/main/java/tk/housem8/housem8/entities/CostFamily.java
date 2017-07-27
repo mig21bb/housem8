@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -54,9 +55,10 @@ public class CostFamily implements Serializable {
     private String description;
     @Column(name = "period")
     private Integer period;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cOSTFAMILYid")
+    /*
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cOSTFAMILYid",fetch = FetchType.LAZY)
     private List<Cost> costList;
-
+*/
     public CostFamily() {
     }
 
@@ -101,7 +103,7 @@ public class CostFamily implements Serializable {
     public void setPeriod(Integer period) {
         this.period = period;
     }
-
+/*
     @XmlTransient
     public List<Cost> getCostList() {
         return costList;
@@ -110,7 +112,7 @@ public class CostFamily implements Serializable {
     public void setCostList(List<Cost> costList) {
         this.costList = costList;
     }
-
+*/
     @Override
     public int hashCode() {
         int hash = 0;

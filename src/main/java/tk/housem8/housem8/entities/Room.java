@@ -5,12 +5,15 @@
  */
 package tk.housem8.housem8.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -33,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Room.findAll", query = "SELECT r FROM Room r"),
     @NamedQuery(name = "Room.findById", query = "SELECT r FROM Room r WHERE r.id = :id"),
     @NamedQuery(name = "Room.findBySquareMeters", query = "SELECT r FROM Room r WHERE r.squareMeters = :squareMeters"),
+    @NamedQuery(name = "Room.findByHouseId", query = "SELECT r FROM Room r WHERE r.houseId = :houseId"),
     @NamedQuery(name = "Room.findByWindows", query = "SELECT r FROM Room r WHERE r.windows = :windows")})
 public class Room implements Serializable {
 
@@ -48,14 +52,20 @@ public class Room implements Serializable {
     private float squareMeters;
     @Column(name = "windows")
     private Boolean windows;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rOOMid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomId",fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Ocupation> ocupationList;
     @JoinColumn(name = "HOUSE_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private House hOUSEid;
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @JsonBackReference
+    private House houseId;
+    //@Column(name="house_id")
+    //private Integer houseId;
+    
     @JoinColumn(name = "ROOM_CLASS_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private RoomClass rOOMCLASSid;
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    private RoomClass roomClass;
+    
 
     public Room() {
     }
@@ -101,21 +111,31 @@ public class Room implements Serializable {
     public void setOcupationList(List<Ocupation> ocupationList) {
         this.ocupationList = ocupationList;
     }
-
-    public House getHOUSEid() {
-        return hOUSEid;
+    
+    public House getHouseId() {
+        return houseId;
     }
 
-    public void setHOUSEid(House hOUSEid) {
-        this.hOUSEid = hOUSEid;
+    public void setHouseId(House houseId) {
+        this.houseId = houseId;
     }
+    /*
+
+    public Integer getHouseId() {
+        return houseId;
+    }
+
+    public void setHouseId(Integer houseId) {
+        this.houseId = houseId;
+    }
+    */
 
     public RoomClass getROOMCLASSid() {
-        return rOOMCLASSid;
+        return roomClass;
     }
 
-    public void setROOMCLASSid(RoomClass rOOMCLASSid) {
-        this.rOOMCLASSid = rOOMCLASSid;
+    public void setROOMCLASSid(RoomClass roomClass) {
+        this.roomClass = roomClass;
     }
 
     @Override

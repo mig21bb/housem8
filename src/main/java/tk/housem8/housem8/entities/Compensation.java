@@ -5,6 +5,7 @@
  */
 package tk.housem8.housem8.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -58,9 +59,11 @@ public class Compensation implements Serializable {
     private String notes;
     @JoinColumn(name = "payer", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonBackReference
     private Mate payer;
     @JoinColumn(name = "receiver", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonBackReference
     private Mate receiver;
 
     public Compensation() {

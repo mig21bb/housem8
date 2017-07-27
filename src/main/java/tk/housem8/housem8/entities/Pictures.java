@@ -5,6 +5,7 @@
  */
 package tk.housem8.housem8.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -57,6 +58,7 @@ public class Pictures implements Serializable {
     private Integer dataId;
     @JoinColumn(name = "TABLE_NAME_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonBackReference
     private TableName tABLENAMEid;
 
     public Pictures() {

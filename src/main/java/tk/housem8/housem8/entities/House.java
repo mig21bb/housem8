@@ -5,12 +5,14 @@
  */
 package tk.housem8.housem8.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -79,10 +81,12 @@ public class House implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "square_meters")
-    private float squareMeters;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hOUSEid")
+    private float squareMeters;    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "houseId",fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Cost> costList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hOUSEid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "houseId",fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Room> roomList;
 
     public House() {
