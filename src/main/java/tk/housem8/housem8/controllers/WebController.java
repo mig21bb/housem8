@@ -40,9 +40,8 @@ public class WebController {
     @RequestMapping("/login")
     public String logPage( Model model) {
         
-        
-        
         return "login";
+                
     }
     /*
     @RequestMapping("/logIn")

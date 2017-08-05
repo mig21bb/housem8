@@ -52,6 +52,7 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
         return new WebMvcConfigurerAdapter() {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**");
+                registry.addMapping("/static/css/**");
             }
         };
     }
