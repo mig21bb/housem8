@@ -1,4 +1,4 @@
-/src/main/resources/application.properties
 /src/main/resources/META-INF/persistence.xml
 target/classes/application.properties
 target/classes/META-INF/persistence.xml
+/src/main/resources/application_1.properties

@@ -7,7 +7,10 @@ package tk.housem8.housem8.controllers;
 
 import java.util.Calendar;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
@@ -27,12 +30,19 @@ public class WebController {
     MateRepository mateRepository;
 
     @RequestMapping("/")
-    public String index( Model model) {
+    public String index(HttpSession httpSession, Model model) {
         
-        List<Mate> mates = (List<Mate>) mateRepository.findAll();
+        SecurityContextImpl secContext = (SecurityContextImpl) httpSession.getAttribute("SPRING_SECURITY_CONTEXT");
+        User user = (User) secContext.getAuthentication().getPrincipal();
+        try{
+            Mate mate = (Mate) mateRepository.findByEmail(user.getUsername());
         
         model.addAttribute("date", Calendar.getInstance().getTime().toString());
-        model.addAttribute("mates", mates);
+        model.addAttribute("mate", mate);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
         
         return "index";
     }
@@ -41,6 +51,13 @@ public class WebController {
     public String logPage( Model model) {
         
         return "login";
+                
+    }
+    
+    @RequestMapping("/singup")
+    public String singUpPage( Model model) {
+        
+        return "singup";
                 
     }
     /*

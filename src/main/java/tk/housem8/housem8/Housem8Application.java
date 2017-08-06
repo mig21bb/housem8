@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -46,16 +47,26 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
     public void init(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService());
     }
+    
+    
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+          .addResourceHandler("/webjars/**")
+          .addResourceLocations("/webjars/");
+    }
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**");
-                registry.addMapping("/static/css/**");
+                registry.addMapping("/static/**");
+                
             }
         };
     }
+    
+    
 
     @Bean
     public SessionLocaleResolver localeResolver() {
@@ -84,6 +95,7 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
                 mate = mateRepository.findByEmail(email);
 
                 if (mate != null) {
+                    
                     return new User(mate.getEmail(), mate.getPass(), true, true, true, true,
                             AuthorityUtils.createAuthorityList("USER"));
                 } else {
@@ -100,17 +112,16 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/index").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                /*.formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()*/
-                .logout()
-                .permitAll().and().httpBasic().and()
-                .csrf().disable().anonymous().and().sessionManagement().maximumSessions(6);
+        http.authorizeRequests().antMatchers("/", "/index", "/quizStart")
+                .permitAll().anyRequest().authenticated();
+        http.formLogin().loginPage("/login").permitAll();
+        http.logout().logoutUrl("/logout").permitAll();
+        http.logout().logoutSuccessUrl("/login").deleteCookies("JSESSIONID");
+        http.httpBasic().and()
+                .csrf().disable().anonymous().and()
+                .sessionManagement().maximumSessions(6);
+        http.authorizeRequests().antMatchers("/static/css/*").permitAll().anyRequest().permitAll();
+       
     }
 
 }
