@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -47,12 +48,11 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
     public void init(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService());
     }
-    
-    
+
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-          .addResourceHandler("/webjars/**")
-          .addResourceLocations("/webjars/");
+                .addResourceHandler("/webjars/**")
+                .addResourceLocations("/webjars/");
     }
 
     @Bean
@@ -61,23 +61,26 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**");
                 registry.addMapping("/static/**");
-                
+
+            }
+
+            @Override
+            public void addInterceptors(InterceptorRegistry registry) {
+                registry.addInterceptor(localeChangeInterceptor());
             }
         };
     }
-    
-    
 
     @Bean
     public SessionLocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
-        slr.setDefaultLocale(Locale.US);
+        slr.setDefaultLocale(Locale.ENGLISH);
         return slr;
     }
 
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
-        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();        
         lci.setParamName("lang");
         return lci;
     }
@@ -95,8 +98,8 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
                 mate = mateRepository.findByEmail(email);
 
                 if (mate != null) {
-                    
-                    return new User(mate.getEmail(), mate.getPass(), true, true, true, true,
+
+                    return new User(mate.getEmail(), mate.getPass(), mate.isActivo(), true, true, true,
                             AuthorityUtils.createAuthorityList("USER"));
                 } else {
                     throw new UsernameNotFoundException("could not find the user '"
@@ -112,16 +115,17 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/", "/index", "/quizStart")
+        http.authorizeRequests().antMatchers("/index")
                 .permitAll().anyRequest().authenticated();
         http.formLogin().loginPage("/login").permitAll();
         http.logout().logoutUrl("/logout").permitAll();
         http.logout().logoutSuccessUrl("/login").deleteCookies("JSESSIONID");
         http.httpBasic().and()
-                .csrf().disable().anonymous().and()
+                .csrf().disable().anonymous()
+                .and()
                 .sessionManagement().maximumSessions(6);
         http.authorizeRequests().antMatchers("/static/css/*").permitAll().anyRequest().permitAll();
-       
+
     }
 
 }

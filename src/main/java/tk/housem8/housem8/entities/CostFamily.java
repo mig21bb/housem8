@@ -6,6 +6,7 @@
 package tk.housem8.housem8.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -17,6 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -55,6 +58,17 @@ public class CostFamily implements Serializable {
     private String description;
     @Column(name = "period")
     private Integer period;
+     @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    @Column(name = "fecha_modificacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaModificacion;
+    @Column(name = "fecha_borrado")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaBorrado;
+    @Column(name = "activo")
+    private boolean activo;
     /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cOSTFAMILYid",fetch = FetchType.LAZY)
     private List<Cost> costList;
@@ -102,6 +116,38 @@ public class CostFamily implements Serializable {
 
     public void setPeriod(Integer period) {
         this.period = period;
+    }
+    
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public Date getFechaBorrado() {
+        return fechaBorrado;
+    }
+
+    public void setFechaBorrado(Date fechaBorrado) {
+        this.fechaBorrado = fechaBorrado;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 /*
     @XmlTransient

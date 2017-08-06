@@ -59,6 +59,17 @@ public class Cost implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "amount")
     private Float amount;
+     @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    @Column(name = "fecha_modificacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaModificacion;
+    @Column(name = "fecha_borrado")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaBorrado;
+    @Column(name = "activo")
+    private boolean activo;
     @JoinColumn(name = "COST_FAMILY_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CostFamily costFamily;
@@ -147,6 +158,38 @@ public class Cost implements Serializable {
     }
     public void setMateId(Mate mateId) {
     this.mateId = mateId;
+    }
+    
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public Date getFechaBorrado() {
+        return fechaBorrado;
+    }
+
+    public void setFechaBorrado(Date fechaBorrado) {
+        this.fechaBorrado = fechaBorrado;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
    
      

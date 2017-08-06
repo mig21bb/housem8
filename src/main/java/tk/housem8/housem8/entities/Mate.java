@@ -78,6 +78,22 @@ public class Mate implements Serializable {
     @Size(max = 45)
     @Column(name = "user")
     private String user;
+    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    @Column(name = "fecha_modificacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaModificacion;
+    @Column(name = "fecha_borrado")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaBorrado;
+    @Column(name = "activo")
+    private boolean activo;
+    
+    
+    
+    
+    
     @Size(max = 45)
     @Column(name = "pass")
     @JsonProperty(access = Access.WRITE_ONLY)
@@ -172,6 +188,38 @@ public class Mate implements Serializable {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+    
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public Date getFechaBorrado() {
+        return fechaBorrado;
+    }
+
+    public void setFechaBorrado(Date fechaBorrado) {
+        this.fechaBorrado = fechaBorrado;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     @XmlTransient

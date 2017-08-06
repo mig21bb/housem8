@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import tk.housem8.housem8.entities.TableName;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-08-05T20:10:20")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-08-06T23:05:07")
 @StaticMetamodel(Pictures.class)
 public class Pictures_ { 
 

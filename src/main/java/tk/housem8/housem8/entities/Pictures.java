@@ -56,10 +56,7 @@ public class Pictures implements Serializable {
     private byte[] active;
     @Column(name = "data_id")
     private Integer dataId;
-    @JoinColumn(name = "TABLE_NAME_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    @JsonBackReference
-    private TableName tABLENAMEid;
+    
 
     public Pictures() {
     }
@@ -108,13 +105,7 @@ public class Pictures implements Serializable {
         this.dataId = dataId;
     }
 
-    public TableName getTABLENAMEid() {
-        return tABLENAMEid;
-    }
-
-    public void setTABLENAMEid(TableName tABLENAMEid) {
-        this.tABLENAMEid = tABLENAMEid;
-    }
+    
 
     @Override
     public int hashCode() {
