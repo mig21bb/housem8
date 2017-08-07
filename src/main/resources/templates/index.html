@@ -61,8 +61,13 @@
       <!--/header-->
       <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
         <!--header-->
+        <div th:if="${mate.activo}">
         <div th:replace="drawerHeader :: dHeader"></div>
-        <!--/header-->
+        </div>
+        <div th:if="${!mate.activo}">
+        <div th:replace="login :: loginForm"></div>
+        </div>
+        <!--/header-->       
         <!--nav-->
         <div th:replace="nav :: navigation"></div>
         <!--/nav-->

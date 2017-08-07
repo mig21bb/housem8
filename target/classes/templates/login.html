@@ -60,9 +60,9 @@
             <div th:replace="header :: header"></div>
 
             <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-                <header class="demo-drawer-header">                  
+                <header th:fragment="loginForm" class="demo-drawer-header">                  
                     
-                    <form id="loginForm" th:action="@{/login}" method="post" >
+                    <form  id="loginForm" th:action="@{/login}" method="post" >
                         <div class="mdl-textfield mdl-js-textfield">
                             <input class="mdl-textfield__input mdl-color-text--white" type="text" name="username"/>
                             <label th:text="#{email}" class="mdl-textfield__label mdl-color-text--white" for="username">Email...</label>
