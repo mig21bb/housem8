@@ -73,24 +73,18 @@
         <!--/nav-->
       </div>
       <main class="mdl-layout__content mdl-color--grey-100">
-        <div class="mdl-grid demo-content">          
+        <div class="mdl-grid demo-content">
           
           <!-- House Card -->
-          <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--8-col mdl-grid">
-            <div class="mdl-card__title">
-              <h2 class="mdl-card__title-text">Welcome</h2>
-            </div>
-            <form id="newHouseForm" th:action="@{/login}" method="post" >
-            <div class="mdl-card__supporting-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Mauris sagittis pellentesque lacus eleifend lacinia...
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-              <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                Get Started
-              </a>
-            </div>
-           </form>
+          <div class="mdl-cell--6-col">
+          <th:block  th:if="${mate.activo}">
+            <div th:replace="house :: house"></div>
+          </th:block>
+          </div>
+          <div class="mdl-cell--6-col">
+          <th:block  th:if="${mate.activo}">
+            <div th:replace="house :: newHouse"></div>
+          </th:block>
           </div>
           </div><!--grid end-->
         </main>
@@ -105,5 +99,19 @@
       <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
       <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
       <script src="js/index.js" data-version="2003"></script>
+      <script>
+      function initMap() {
+      var uluru = {lat: -25.363, lng: 131.044};
+      var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 4,
+      center: uluru
+      });
+      var marker = new google.maps.Marker({
+      position: uluru,
+      map: map
+      });
+      }
+      </script>
+      <script async="true" defer="true" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEym5xqbJwHB4t35Hmd0QPQe5LBA9ZNNM&amb;callback=initMap"></script>
     </body>
   </html>
