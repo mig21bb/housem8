@@ -5,19 +5,13 @@
  */
 package tk.housem8.housem8.controllers;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 import tk.housem8.housem8.delegates.WebDelegate;
 import tk.housem8.housem8.entities.Mate;
 import tk.housem8.housem8.repos.CostRepository;
@@ -110,6 +104,7 @@ public class WebController {
         try {
 
             mate = getUserMate(httpSession);
+            
             model.addAttribute("mate", mate);
 
         } catch (Exception e) {

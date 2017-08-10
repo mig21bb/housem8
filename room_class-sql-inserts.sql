@@ -1,9 +1,9 @@
 /*
 -- Query: SELECT * FROM housem8_schema.room_class
--- Date: 2017-07-28 00:22
+-- Date: 2017-08-10 00:36
 */
-INSERT INTO `room_class` (`id`,`category`,`description`) VALUES (1,'bedroom','Dormitorio');
-INSERT INTO `room_class` (`id`,`category`,`description`) VALUES (2,'kitchen','Cocina');
-INSERT INTO `room_class` (`id`,`category`,`description`) VALUES (3,'Bathroom','Baño');
-INSERT INTO `room_class` (`id`,`category`,`description`) VALUES (4,'LivingRoom','Salón');
-INSERT INTO `room_class` (`id`,`category`,`description`) VALUES (5,'Terrase','Terraza');
+INSERT INTO `ROOM_CLASS` (`id`,`description`,`category`,`activo`,`fecha_creacion`,`fecha_modificacion`,`fecha_borrado`) VALUES (1,'Dormitorio','bedroom',1,'2017-07-01 00:00:00',NULL,NULL);
+INSERT INTO `ROOM_CLASS` (`id`,`description`,`category`,`activo`,`fecha_creacion`,`fecha_modificacion`,`fecha_borrado`) VALUES (2,'Cocina','kitchen',1,'2017-07-01 00:00:00',NULL,NULL);
+INSERT INTO `ROOM_CLASS` (`id`,`description`,`category`,`activo`,`fecha_creacion`,`fecha_modificacion`,`fecha_borrado`) VALUES (3,'Baño','Bathroom',1,'2017-07-01 00:00:00',NULL,NULL);
+INSERT INTO `ROOM_CLASS` (`id`,`description`,`category`,`activo`,`fecha_creacion`,`fecha_modificacion`,`fecha_borrado`) VALUES (4,'Salón','LivingRoom',1,'2017-07-01 00:00:00',NULL,NULL);
+INSERT INTO `ROOM_CLASS` (`id`,`description`,`category`,`activo`,`fecha_creacion`,`fecha_modificacion`,`fecha_borrado`) VALUES (5,'Terraza','Terrase',1,'2017-07-01 00:00:00',NULL,NULL);

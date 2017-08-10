@@ -1,5 +1,5 @@
 /*
 -- Query: SELECT * FROM housem8_schema.house
--- Date: 2017-07-28 00:22
+-- Date: 2017-08-10 00:34
 */
-INSERT INTO `house` (`id`,`apartment`,`city`,`country`,`cp`,`floor`,`number`,`other`,`square_meters`,`street`) VALUES (1,'2','Lyon','France','56789',3,4,'rue',72,'la fayette');
+INSERT INTO `HOUSE` (`id`,`country`,`city`,`street`,`cp`,`number`,`floor`,`apartment`,`other`,`square_meters`,`activo`,`fecha_creacion`,`fecha_modificacion`,`fecha_borrado`) VALUES (1,'France','Lyon','la fayette','56789',4,3,'2','rue',72,1,'2017-08-01 00:00:00',NULL,NULL);

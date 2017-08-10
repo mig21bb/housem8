@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Administrador
  */
 @Entity
-@Table(name = "ROOM")
+@Table(name = "room")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Room.findAll", query = "SELECT r FROM Room r"),
@@ -66,7 +66,7 @@ public class Room implements Serializable {
     private Date fechaBorrado;
     @Column(name = "activo")
     private boolean activo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomId",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "room",fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Ocupation> ocupationList;
     @JoinColumn(name = "HOUSE_id", referencedColumnName = "id")

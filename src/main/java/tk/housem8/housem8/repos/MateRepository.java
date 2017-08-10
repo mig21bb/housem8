@@ -24,4 +24,6 @@ public interface MateRepository extends CrudRepository<Mate, Integer> {
     @Query("select m from Mate m where m.email = :email")
     public Mate findByEmail(@Param("email") String email);
     
+    
+    
 }

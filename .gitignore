@@ -2,3 +2,4 @@
 target/classes/application.properties
 target/classes/META-INF/persistence.xml
 /src/main/resources/application_1.properties
+/target/

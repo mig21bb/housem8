@@ -9,7 +9,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 CREATE DATABASE `housem8_schema` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci */;
 
-CREATE TABLE `compensation` (
+CREATE TABLE `housem8_schema`.`compensation` (
   `id` int(11) NOT NULL,
   `amount` float NOT NULL,
   `datetime` datetime NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE `compensation` (
   CONSTRAINT `fk_COMPENSATION_MATE2` FOREIGN KEY (`receiver`) REFERENCES `mate` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
-CREATE TABLE `cost` (
+CREATE TABLE `housem8_schema`.`cost` (
   `id` int(11) NOT NULL,
   `description` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `period` int(11) DEFAULT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE `cost` (
   CONSTRAINT `fk_COST_MATE1` FOREIGN KEY (`MATE_id`) REFERENCES `mate` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
-CREATE TABLE `cost_family` (
+CREATE TABLE `housem8_schema`.`cost_family` (
   `id` int(11) NOT NULL,
   `name` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
   `description` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE `cost_family` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
-CREATE TABLE `house` (
+CREATE TABLE `housem8_schema`.`house` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `country` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `city` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE `house` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
-CREATE TABLE `mate` (
+CREATE TABLE `housem8_schema`.`mate` (
   `id` int(11) NOT NULL,
   `name` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `surname1` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE `mate` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
-CREATE TABLE `ocupation` (
+CREATE TABLE `housem8_schema`.`ocupation` (
   `id` int(11) NOT NULL,
   `ROOM_id` int(11) NOT NULL,
   `MATE_id` int(11) NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE `ocupation` (
   CONSTRAINT `fk_OCUPATION_ROOM1` FOREIGN KEY (`ROOM_id`) REFERENCES `room` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
-CREATE TABLE `pictures` (
+CREATE TABLE `housem8_schema`.`pictures` (
   `id` int(11) NOT NULL,
   `url` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
   `datetime` datetime DEFAULT NULL,
@@ -122,7 +122,7 @@ CREATE TABLE `pictures` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
-CREATE TABLE `room` (
+CREATE TABLE `housem8_schema`.`room` (
   `id` int(11) NOT NULL,
   `square_meters` float NOT NULL,
   `windows` tinyint(1) DEFAULT NULL,
@@ -139,7 +139,7 @@ CREATE TABLE `room` (
   CONSTRAINT `fk_ROOM_ROOM_CLASS1` FOREIGN KEY (`ROOM_CLASS_id`) REFERENCES `room_class` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
-CREATE TABLE `room_class` (
+CREATE TABLE `housem8_schema`.`room_class` (
   `id` int(11) NOT NULL,
   `description` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
   `category` varchar(45) COLLATE utf8_spanish_ci NOT NULL,

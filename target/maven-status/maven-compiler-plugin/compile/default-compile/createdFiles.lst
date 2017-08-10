@@ -1,4 +1,3 @@
-tk\housem8\housem8\entities\TableName_.class
 tk\housem8\housem8\entities\Room.class
 tk\housem8\housem8\repos\OcupationRepository.class
 tk\housem8\housem8\repos\HouseRepository.class
@@ -21,7 +20,6 @@ tk\housem8\housem8\entities\CostFamily_.class
 tk\housem8\housem8\entities\House.class
 tk\housem8\housem8\entities\Pictures_.class
 tk\housem8\housem8\entities\Mate.class
-tk\housem8\housem8\entities\TableName.class
 tk\housem8\housem8\delegates\WebDelegate.class
 tk\housem8\housem8\entities\Compensation_.class
 tk\housem8\housem8\entities\Ocupation.class

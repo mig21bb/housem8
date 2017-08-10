@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Administrador
  */
 @Entity
-@Table(name = "OCUPATION")
+@Table(name = "ocupation")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Ocupation.findAll", query = "SELECT o FROM Ocupation o"),
@@ -64,11 +64,11 @@ public class Ocupation implements Serializable {
     @JoinColumn(name = "MATE_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     @JsonBackReference
-    private Mate mateId;
+    private Mate mate;
     @JoinColumn(name = "ROOM_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     @JsonBackReference
-    private Room roomId;
+    private Room room;
 
     public Ocupation() {
     }
@@ -106,20 +106,20 @@ public class Ocupation implements Serializable {
         this.endDate = endDate;
     }
 
-    public Mate getMateId() {
-        return mateId;
+    public Mate getMate() {
+        return mate;
     }
 
-    public void setMateId(Mate mateId) {
-        this.mateId = mateId;
+    public void setMate(Mate mate) {
+        this.mate = mate;
     }
 
-    public Room getRoomId() {
-        return roomId;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRoomId(Room roomId) {
-        this.roomId = roomId;
+    public void setRoom(Room room) {
+        this.room = room;
     }
     public Date getFechaCreacion() {
         return fechaCreacion;

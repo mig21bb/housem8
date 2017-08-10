@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Administrador
  */
 @Entity
-@Table(name = "MATE")
+@Table(name = "mate")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Mate.findAll", query = "SELECT m FROM Mate m"),
@@ -107,7 +107,7 @@ public class Mate implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver",fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Compensation> compensationList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mateId",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mate",fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Ocupation> ocupationList;
 
