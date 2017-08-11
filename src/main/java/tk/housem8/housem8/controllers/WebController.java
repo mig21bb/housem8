@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 import tk.housem8.housem8.delegates.WebDelegate;
+import tk.housem8.housem8.entities.House;
 import tk.housem8.housem8.entities.Mate;
 import tk.housem8.housem8.repos.CostRepository;
 import tk.housem8.housem8.repos.HouseRepository;
@@ -104,8 +105,10 @@ public class WebController {
         try {
 
             mate = getUserMate(httpSession);
+            House userHouse = houseRepository.findByMate(mate.getId());
             
             model.addAttribute("mate", mate);
+            model.addAttribute("userHouse", userHouse);
 
         } catch (Exception e) {
             e.printStackTrace();

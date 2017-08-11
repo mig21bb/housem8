@@ -18,10 +18,13 @@ import tk.housem8.housem8.entities.House;
  */
 @CrossOrigin
 public interface HouseRepository extends CrudRepository<House, Integer> {
-    /*
-    @Query("select h from House as h "
-            + "join h.room as room join room.ocupation as oc join oc.mate mate"
-            + "where mate.mateId = :mateId and oc.startDate < :date and oc.endDate > :date")
-    public House findByMate(@Param("mateId") Integer mateId,@Param("date") Date date);
-    */
+    
+    /*SELECT h FROM House h left JOIN h.roomList r JOIN r.ocupationList o JOIN o.mate m WHERE o.startDate < CURRENT_DATE and o.endDate > CURRENT_DATE and  m.id= 1
+*/
+    @Query("SELECT h FROM House h "
+            + "left JOIN h.roomList r JOIN r.ocupationList o JOIN o.mate m "
+            + "WHERE o.startDate < CURRENT_DATE and (o.endDate > CURRENT_DATE or o.endDate is null) and  m.id= :mateId"
+            )
+    public House findByMate(@Param("mateId") Integer mateId);
+    
 }
