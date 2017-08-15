@@ -5,6 +5,7 @@
  */
 package tk.housem8.housem8.controllers;
 
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextImpl;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 import tk.housem8.housem8.delegates.WebDelegate;
+import tk.housem8.housem8.entities.Cost;
 import tk.housem8.housem8.entities.House;
 import tk.housem8.housem8.entities.Mate;
 import tk.housem8.housem8.repos.CostRepository;
@@ -20,6 +22,7 @@ import tk.housem8.housem8.repos.HouseRepository;
 import tk.housem8.housem8.repos.MateRepository;
 import tk.housem8.housem8.repos.OcupationRepository;
 import tk.housem8.housem8.repos.RoomRepository;
+
 
 /**
  *
@@ -157,7 +160,14 @@ public class WebController {
         try {
 
             mate = getUserMate(httpSession);
+            House userHouse = houseRepository.findByMate(mate.getId());
+            List<Cost> costs = costRepository.findByMate(mate.getId());
+            
+            
+            
             model.addAttribute("mate", mate);
+            
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

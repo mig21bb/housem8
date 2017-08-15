@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: tk.housem8.housem8.Housem8ApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 18.604 sec - in tk.housem8.housem8.Housem8ApplicationTests
