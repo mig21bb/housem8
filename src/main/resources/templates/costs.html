@@ -107,7 +107,8 @@
                     <td th:text="${cost.datetime}" class="mdl-data-table__cell--non-numeric">2017-08-3</td>
                     <td th:text="${cost.costFamily.description}" class="mdl-data-table__cell--non-numeric">Comida-Limpieza</td>
                     <td th:text="${cost.amount}+' €'">2.90€</td>
-                    <td th:text="${cost.commerce.name}">Mercadona</td>
+                    <td  class="commerce_logo"><img th:src="${cost.commerce.logo}" th:alt="${cost.commerce.name}"/>
+                    </td>
                     <td th:text="${cost.mateId.name}">mab</td>
                   </tr>
                   <tr th:remove="all">
@@ -141,12 +142,12 @@
             </div>
             <form id="newCostForm" th:action="@{/newCost}" method="post" >
               <div class="mdl-card__supporting-text">
-                <div class="mdl-cell--4-col">
-                  <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
+                <div class="mdl-cell--8-col">
+                  <div class="mdl-textfield mdl-js-textfield mdl-cell--6-col">
                     <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="description"/>
                     <label th:text="#{description}" class="mdl-textfield__label mdl-color-text--grey-600" for="country">Descripcion</label>
                   </div>
-                  <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
+                  <div class="mdl-textfield mdl-js-textfield mdl-cell--6-col">
                   <select class="mdl-textfield__input mdl-color-text--grey-600" name="period">
                     <option value="">Not periodly</option>
                     <option value="30">Monthly</option>
@@ -156,9 +157,9 @@
                     <option value="365">Yearly</option>
                   </select>
                    
-                    <label th:text="#{period}" class="mdl-textfield__label mdl-color-text--grey-600" for="city">Period (days)</label>
+                    <label th:text="#{period}" class="mdl-textfield__label mdl-color-text--grey-600" for="period">Period (days)</label>
                   </div>
-                  <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
+                  <div class="mdl-textfield mdl-js-textfield mdl-cell--6-col">
                     <input class="mdl-textfield__input mdl-color-text--grey-600" type="date" name="datetime"/>
                     <label th:text="#{datetime}" class="mdl-textfield__label mdl-color-text--grey-600" for="street">Date and time </label>
                   </div>
@@ -168,11 +169,11 @@
                     <option th:remove="all" value="3">Each 3 months</option>
                     <option th:remove="all" value="150">Half year</option>                    
                   </select>
-                  <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
+                  <div class="mdl-textfield mdl-js-textfield mdl-cell--6-col">
                     <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="amount"/>
                     <label th:text="#{amount}+#{coin}" class="mdl-textfield__label mdl-color-text--grey-600" for="floor">Amount </label>
                   </div>
-                  <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
+                  <div class="mdl-textfield mdl-js-textfield mdl-cell--6-col">
                     <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="comerce"/>
                     <label th:text="#{commerce}" class="mdl-textfield__label mdl-color-text--grey-600" for="floor">Commerce</label>
                   </div>
