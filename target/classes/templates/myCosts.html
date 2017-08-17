@@ -59,26 +59,37 @@
       <!--header-->
       <div th:replace="header :: header"></div>
       <!--/header-->
+      <!--nav bar-->
       <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
         <!--header-->
-         <th:block  th:if="${mate.activo}">
-        <div th:replace="drawerHeader :: dHeader"></div>
+        <th:block th:if="${mate.activo}">
+          <div th:replace="drawerHeader :: dHeader"></div>
         </th:block>
         <th:block th:if="${!mate.activo}">
-        <div  th:replace="login :: loginForm"></div>
+          <div  th:replace="login :: loginForm"></div>
         </th:block>
-        <!--/header-->    
+        <!--/header-->
         <!--nav-->
         <div th:replace="nav :: navigation"></div>
         <!--/nav-->
       </div>
-       <main class="mdl-layout__content mdl-color--grey-100">
-          <div class="mdl-grid demo-content">
-          </div>
-       </main>
+      <!--/nav bar-->
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid demo-content">
+          <th:block  th:if="${mate.activo}">
+            <div th:replace="costs :: costsList"></div>
+          </th:block>
+          <th:block  th:if="${mate.activo}">
+            <div th:replace="costs :: newCost"></div>
+          </th:block>
+        </div>
+       
+      </main>
     </div>
+
+
     <th:block  th:if="${mate.activo}">
-       <a th:href="@{/newCost}" th:text="#{new_cost}"  href="singup.html" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">Nuevo gasto</a>
+      <a th:text="#{new_cost}" onclick="javascript:introNew('cost')" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">Nuevo gasto</a>
     </th:block>
     <th:block th:if="${!mate.activo}">
       <a th:href="@{/singup}" th:text="#{new_user}"  href="singup.html" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">Nueva Cuenta</a>

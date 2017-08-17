@@ -5,9 +5,9 @@
 *
 *
 **/
-$.getScript("js/md5-min.js")
+$.getScript("js/md5-min.js");
 $('#loginForm').submit(function( event ) {
   
   $(this).find('input:password').val(hex_md5($(this).find('input:password').val()));
   
-})
+});

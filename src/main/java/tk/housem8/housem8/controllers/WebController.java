@@ -5,6 +5,11 @@
  */
 package tk.housem8.housem8.controllers;
 
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoField;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +18,15 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 import tk.housem8.housem8.delegates.WebDelegate;
+import tk.housem8.housem8.entities.Commerce;
 import tk.housem8.housem8.entities.Cost;
+import tk.housem8.housem8.entities.CostFamily;
 import tk.housem8.housem8.entities.House;
 import tk.housem8.housem8.entities.Mate;
+import tk.housem8.housem8.repos.CommerceRepository;
+import tk.housem8.housem8.repos.CostFamilyRepository;
 import tk.housem8.housem8.repos.CostRepository;
 import tk.housem8.housem8.repos.HouseRepository;
 import tk.housem8.housem8.repos.MateRepository;
@@ -41,6 +51,10 @@ public class WebController {
     OcupationRepository ocupationRepository;
     @Autowired
     RoomRepository roomRepository;
+    @Autowired
+    CostFamilyRepository costFamilyRepository;
+    @Autowired
+    CommerceRepository commerceRepository;
     @Autowired
     WebDelegate WebDelegate;
 
@@ -153,19 +167,35 @@ public class WebController {
      * @return
      */
     @RequestMapping("/myCosts")
-    public String myCosts(HttpSession httpSession, Model model) {
+    public String myCosts(HttpSession httpSession,
+            @RequestParam(value = "startDate", required = false) Date startDate,
+            @RequestParam(value = "endDate", required = false) Date endDate,
+            Model model) {
 
         String response = "myCosts";
         Mate mate = new Mate();
         try {
 
-            mate = getUserMate(httpSession);
+            mate = getUserMate(httpSession);            
             House userHouse = houseRepository.findByMate(mate.getId());
-            List<Cost> costs = costRepository.findByMate(mate.getId());
-            
+            LocalDate today = LocalDate.now();            
+            if(startDate == null){
+                startDate = Date.from(today.with(ChronoField.DAY_OF_MONTH , 1 ).atStartOfDay().toInstant(ZoneOffset.UTC));
+            }
+            today = today.plusMonths(1);
+            if(endDate == null){
+                endDate = Date.from(today.with(ChronoField.DAY_OF_MONTH , 1 ).atStartOfDay().toInstant(ZoneOffset.UTC));
+            }
+            List<Cost> costs = costRepository.findByMateAndHouse(mate.getId(),userHouse.getId(),startDate,endDate);
+            List<CostFamily> costFamily = costFamilyRepository.findAllActive();
+            List<Commerce> commerce = commerceRepository.findAllActive();
             
             
             model.addAttribute("mate", mate);
+            model.addAttribute("userHouse", userHouse);
+            model.addAttribute("costs", costs);
+            model.addAttribute("costFamily", costFamily);
+            model.addAttribute("commerce", commerce);
             
             
         } catch (Exception e) {

@@ -79,10 +79,20 @@
           <div th:fragment="costsList" class="houseCard mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
             <div class="mdl-card__title">
               <h2 th:text="${userHouse.street}+' '+${userHouse.number}+','+${userHouse.city}+'/ '+#{costs}" class="mdl-card__title-text">Welcome</h2>
+              <select name="mes" id="costsMonth">
+                <option th:each="period : ${period}" value="">
+                  
+                </option>
+                <option value=""></option>
+                <option value=""></option>
+                <option value=""></option>
+                <option value=""></option>
+                <option value=""></option>
+              </select>
             </div>
             
             <div class="mdl-card__supporting-text">
-              <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+              <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable">
                 <thead>
                   <tr>
                     <th class="mdl-data-table__cell--non-numeric">Fecha</th>
@@ -94,11 +104,11 @@
                 </thead>
                 <tbody>
                   <tr th:each="cost : ${costs}">
-                    <td th:text="${cost.datetime}"class="mdl-data-table__cell--non-numeric">2017-08-3</td>
-                    <td th:text="${<cost class="costFamilyId description"></cost>}">Comida-Limpieza</td>
-                    <td th:text="${cost.name}">2.90€</td>
-                    <td th:text="${cost.name}">Mercadona</td>
-                    <td th:text="${cost.name}">mab</td>
+                    <td th:text="${cost.datetime}" class="mdl-data-table__cell--non-numeric">2017-08-3</td>
+                    <td th:text="${cost.costFamily.description}" class="mdl-data-table__cell--non-numeric">Comida-Limpieza</td>
+                    <td th:text="${cost.amount}+' €'">2.90€</td>
+                    <td th:text="${cost.commerce.name}">Mercadona</td>
+                    <td th:text="${cost.mateId.name}">mab</td>
                   </tr>
                   <tr th:remove="all">
                     <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
@@ -117,89 +127,81 @@
                 </tbody>
               </table>
             </div>
-            <div>
-              <style>
-              #map {
-              height: 400px;
-              width: 100%;
-              }
-              </style>
-              <div id="map"></div>
-              
-            </div>
-          </div>
-          <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-              Get Started
-            </a>
-          </div>
-          
-        </div>
-        <div th:fragment="newHouse" class="houseCard mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-          <div class="mdl-card__title">
-            <h2 class="mdl-card__title-text">Welcome</h2>
-          </div>
-          <form id="newHouseForm" th:action="@{/login}" method="post" >
-            <div class="mdl-card__supporting-text">
-              <div class="mdl-cell--4-col">
-                <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
-                  <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="country"/>
-                  <label th:text="#{country}" class="mdl-textfield__label mdl-color-text--grey-600" for="country">Pais </label>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
-                  <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="city"/>
-                  <label th:text="#{city}" class="mdl-textfield__label mdl-color-text--grey-600" for="city">Ciudad </label>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
-                  <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="street"/>
-                  <label th:text="#{street}" class="mdl-textfield__label mdl-color-text--grey-600" for="street">Calle </label>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
-                  <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="number"/>
-                  <label th:text="#{number}" class="mdl-textfield__label mdl-color-text--grey-600" for="number">Número </label>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
-                  <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="floor"/>
-                  <label th:text="#{floor}" class="mdl-textfield__label mdl-color-text--grey-600" for="floor">Pais </label>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
-                  <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="apartment"/>
-                  <label th:text="#{apartment}" class="mdl-textfield__label mdl-color-text--grey-600" for="apartment">Ciudad </label>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
-                  <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="cp"/>
-                  <label th:text="#{cp}" class="mdl-textfield__label mdl-color-text--grey-600" for="cp">Calle </label>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
-                  <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="other"/>
-                  <label th:text="#{other}" class="mdl-textfield__label mdl-color-text--grey-600" for="other">Número </label>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
-                  <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="square_meters"/>
-                  <label th:text="#{square_meters}" class="mdl-textfield__label mdl-color-text--grey-600" for="square_meters">Número </label>
-                </div>
-              </div>
-              <div>
-                <style>
-                #map {
-                height: 400px;
-                width: 100%;
-                }
-                </style>
-                <div id="map"></div>
-                
-              </div>
-            </div>
+                        
             <div class="mdl-card__actions mdl-card--border">
               <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                 Get Started
               </a>
             </div>
-          </form>
-          
+          </div>
+
+          <div th:fragment="newCost" id="new_cost"  style="display: none" class="houseCard mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">New Cost</h2>
+            </div>
+            <form id="newCostForm" th:action="@{/newCost}" method="post" >
+              <div class="mdl-card__supporting-text">
+                <div class="mdl-cell--4-col">
+                  <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
+                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="description"/>
+                    <label th:text="#{description}" class="mdl-textfield__label mdl-color-text--grey-600" for="country">Descripcion</label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
+                  <select class="mdl-textfield__input mdl-color-text--grey-600" name="period">
+                    <option value="">Not periodly</option>
+                    <option value="30">Monthly</option>
+                    <option value="60">Each 2 months</option>
+                    <option value="120">Each 3 months</option>
+                    <option value="150">Half year</option>
+                    <option value="365">Yearly</option>
+                  </select>
+                   
+                    <label th:text="#{period}" class="mdl-textfield__label mdl-color-text--grey-600" for="city">Period (days)</label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
+                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="date" name="datetime"/>
+                    <label th:text="#{datetime}" class="mdl-textfield__label mdl-color-text--grey-600" for="street">Date and time </label>
+                  </div>
+                   <select class="mdl-textfield__input mdl-color-text--grey-600" name="costFamily">
+                    <option th:each="costFamily : ${costFamily}" th:text="${costFamily.name}"  th:value="${costFamily.id}">Groceries</option>
+                    <option th:remove="all" value="2">Petrol</option>
+                    <option th:remove="all" value="3">Each 3 months</option>
+                    <option th:remove="all" value="150">Half year</option>                    
+                  </select>
+                  <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
+                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="amount"/>
+                    <label th:text="#{amount}+#{coin}" class="mdl-textfield__label mdl-color-text--grey-600" for="floor">Amount </label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
+                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="comerce"/>
+                    <label th:text="#{commerce}" class="mdl-textfield__label mdl-color-text--grey-600" for="floor">Commerce</label>
+                  </div>
+                 
+                </div>
+                <div>
+                  <style>
+                  #map {
+                  height: 400px;
+                  width: 100%;
+                  }
+                  </style>
+                  <div id="map"></div>
+                  
+                </div>
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <input type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                  Save
+                </input>
+              </div>
+            </form>
+           
+          </div>
+
         </div>
         
-        </div><!--grid end-->
+        
+        
       </main>
     </div>
     <th:block  th:if="${mate.activo}">

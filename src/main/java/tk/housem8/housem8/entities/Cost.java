@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Cost.findByPeriod", query = "SELECT c FROM Cost c WHERE c.period = :period"),
     @NamedQuery(name = "Cost.findByDatetime", query = "SELECT c FROM Cost c WHERE c.datetime = :datetime"),
     @NamedQuery(name = "Cost.findByHouseId", query = "SELECT c FROM Cost c WHERE c.houseId = :houseId"),
+    @NamedQuery(name = "Cost.findByCommerce", query = "SELECT c FROM Cost c WHERE c.commerce = :commerce"),
     @NamedQuery(name = "Cost.findByAmount", query = "SELECT c FROM Cost c WHERE c.amount = :amount")})
 
 public class Cost implements Serializable {
@@ -59,7 +60,7 @@ public class Cost implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "amount")
     private Float amount;
-     @Column(name = "fecha_creacion")
+    @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
     @Column(name = "fecha_modificacion")
@@ -82,6 +83,11 @@ public class Cost implements Serializable {
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JsonBackReference
     private Mate mateId;
+    
+    @JoinColumn(name = "commerce_id", referencedColumnName = "id")
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Commerce commerce;
     
 //    @Column(name = "house_id")
 //    private Integer houseId;
@@ -144,6 +150,15 @@ public class Cost implements Serializable {
         this.costFamily = costFamily;
     }
 
+    public Commerce getCommerce() {
+        return commerce;
+    }
+
+    public void setCommerce(Commerce commerce) {
+        this.commerce = commerce;
+    }
+
+    
   /* */
     public House getHouseId() {
         return houseId;

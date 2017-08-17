@@ -5,9 +5,11 @@
  */
 package tk.housem8.housem8.repos;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import tk.housem8.housem8.entities.Cost;
 
@@ -18,10 +20,11 @@ import tk.housem8.housem8.entities.Cost;
 @CrossOrigin
 public interface CostRepository extends CrudRepository<Cost, Integer> {
 
-    @Query("SELECT h FROM House h "
-            + "left JOIN h.roomList r JOIN r.ocupationList o JOIN o.mate m "
-            + "WHERE o.startDate < CURRENT_DATE and (o.endDate > CURRENT_DATE or o.endDate is null) and  m.id= :mateId"
+    @Query("select c from Cost c where c.mateId.id=:mateId and c.houseId.id=:houseId and c.datetime BETWEEN :startDate AND :endDate"
             )
-    public List<Cost> findByMate(Integer id);
+    public List<Cost> findByMateAndHouse(@Param("mateId") Integer mateId,
+                                         @Param("houseId") Integer houseId,
+                                         @Param("startDate") Date startDate,
+                                         @Param("endDate") Date endDate);
     
 }
