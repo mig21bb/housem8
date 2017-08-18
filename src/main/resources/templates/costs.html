@@ -107,7 +107,7 @@
                     <td th:text="${cost.datetime}" class="mdl-data-table__cell--non-numeric">2017-08-3</td>
                     <td th:text="${cost.costFamily.description}" class="mdl-data-table__cell--non-numeric">Comida-Limpieza</td>
                     <td th:text="${cost.amount}+' €'">2.90€</td>
-                    <td  class="commerce_logo"><img th:src="${cost.commerce.logo}" th:alt="${cost.commerce.name}"/>
+                    <td ><img class="commerce_logo" th:src="${cost.commerce.logo}" th:alt="${cost.commerce.name}"/>
                     </td>
                     <td th:text="${cost.mateId.name}">mab</td>
                   </tr>

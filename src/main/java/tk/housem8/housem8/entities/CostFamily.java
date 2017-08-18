@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,6 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CostFamily.findByDescription", query = "SELECT c FROM CostFamily c WHERE c.description = :description"),
     @NamedQuery(name = "CostFamily.findByPeriod", query = "SELECT c FROM CostFamily c WHERE c.period = :period")})
 public class CostFamily implements Serializable {
+
+    
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -183,5 +186,7 @@ public class CostFamily implements Serializable {
     public String toString() {
         return "tk.housem8.housem8.entities.CostFamily[ id=" + id + " ]";
     }
+
+    
     
 }

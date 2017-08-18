@@ -76,12 +76,13 @@
       <!--/nav bar-->
       <main class="mdl-layout__content mdl-color--grey-100">
         <div class="mdl-grid demo-content">
+         <th:block  th:if="${mate.activo}">
+            <div th:replace="costs :: newCost"></div>
+          </th:block>
           <th:block  th:if="${mate.activo}">
             <div th:replace="costs :: costsList"></div>
           </th:block>
-          <th:block  th:if="${mate.activo}">
-            <div th:replace="costs :: newCost"></div>
-          </th:block>
+         
         </div>
        
       </main>

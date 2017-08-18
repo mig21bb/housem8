@@ -8,7 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import tk.housem8.housem8.entities.Cost;
 import tk.housem8.housem8.entities.Room;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-08-17T02:13:25")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-08-18T03:33:40")
 @StaticMetamodel(House.class)
 public class House_ { 
 
