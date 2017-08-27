@@ -10,15 +10,20 @@ import java.time.ZoneOffset;
 import java.time.temporal.ChronoField;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.EmptyStackException;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import tk.housem8.housem8.delegates.WebDelegate;
 import tk.housem8.housem8.entities.Commerce;
 import tk.housem8.housem8.entities.Cost;
@@ -32,7 +37,6 @@ import tk.housem8.housem8.repos.HouseRepository;
 import tk.housem8.housem8.repos.MateRepository;
 import tk.housem8.housem8.repos.OcupationRepository;
 import tk.housem8.housem8.repos.RoomRepository;
-
 
 /**
  *
@@ -123,7 +127,7 @@ public class WebController {
 
             mate = getUserMate(httpSession);
             House userHouse = houseRepository.findByMate(mate.getId());
-            
+
             model.addAttribute("mate", mate);
             model.addAttribute("userHouse", userHouse);
 
@@ -170,34 +174,39 @@ public class WebController {
     public String myCosts(HttpSession httpSession,
             @RequestParam(value = "startDate", required = false) Date startDate,
             @RequestParam(value = "endDate", required = false) Date endDate,
+            @RequestParam(value = "year", required = false) Integer month,
+            @RequestParam(value = "month", required = false) Integer year,
             Model model) {
 
         String response = "myCosts";
         Mate mate = new Mate();
         try {
 
-            mate = getUserMate(httpSession);            
-            House userHouse = houseRepository.findByMate(mate.getId());
-            LocalDate today = LocalDate.now();            
-            if(startDate == null){
-                startDate = Date.from(today.with(ChronoField.DAY_OF_MONTH , 1 ).atStartOfDay().toInstant(ZoneOffset.UTC));
+            mate = getUserMate(httpSession);
+            if (mate.isActivo()) {
+                House userHouse = houseRepository.findByMate(mate.getId());
+                LocalDate today = LocalDate.now();
+                if (startDate == null) {
+                    startDate = Date.from(today.with(ChronoField.DAY_OF_MONTH, 1).atStartOfDay().toInstant(ZoneOffset.UTC));
+                }
+                today = today.plusMonths(1);
+                if (endDate == null) {
+                    endDate = Date.from(today.with(ChronoField.DAY_OF_MONTH, 1).atStartOfDay().toInstant(ZoneOffset.UTC));
+                }
+                List<Cost> costs = costRepository.findByMateAndHouse(mate.getId(), userHouse.getId(), startDate, endDate);
+                List<CostFamily> costFamily = costFamilyRepository.findAllActive();
+                List<Commerce> commerce = commerceRepository.findAllActive();
+
+                model.addAttribute("mate", mate);
+                model.addAttribute("userHouse", userHouse);
+                model.addAttribute("costs", costs);
+                model.addAttribute("costFamily", costFamily);
+                model.addAttribute("commerce", commerce);
+                model.addAttribute("cost", new Cost());
+            } else {
+                response = "login";
             }
-            today = today.plusMonths(1);
-            if(endDate == null){
-                endDate = Date.from(today.with(ChronoField.DAY_OF_MONTH , 1 ).atStartOfDay().toInstant(ZoneOffset.UTC));
-            }
-            List<Cost> costs = costRepository.findByMateAndHouse(mate.getId(),userHouse.getId(),startDate,endDate);
-            List<CostFamily> costFamily = costFamilyRepository.findAllActive();
-            List<Commerce> commerce = commerceRepository.findAllActive();
-            
-            
-            model.addAttribute("mate", mate);
-            model.addAttribute("userHouse", userHouse);
-            model.addAttribute("costs", costs);
-            model.addAttribute("costFamily", costFamily);
-            model.addAttribute("commerce", commerce);
-            
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -285,15 +294,32 @@ public class WebController {
      * @param model
      * @return
      */
-    @RequestMapping("/newCost")
-    public String newCost(HttpSession httpSession, Model model) {
+    @RequestMapping("/newCost")    
+    public @ResponseBody Integer newCost(HttpSession httpSession, Model model,
+            @ModelAttribute Cost newCost,
+            @RequestParam(value = "startDate", required = false) Date startDate,
+            @RequestParam(value = "endDate", required = false) Date endDate) {
 
-        String response = "newCost";
+        Integer response = new Integer(-1);
         Mate mate = new Mate();
         try {
 
             mate = getUserMate(httpSession);
-            model.addAttribute("mate", mate);
+            if (mate.isActivo()) {
+                
+                newCost.setFechaCreacion(new Date());
+                newCost.setFechaModificacion(new Date());
+                newCost.setMateId(mate);
+                newCost.setActivo(true);
+                newCost.setHouseId(houseRepository.findByMate(mate.getId()));                
+                
+                costRepository.save(newCost);
+                
+                response=newCost.getId();
+                
+            } else {
+                response =new Integer(-1);;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

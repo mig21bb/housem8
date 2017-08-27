@@ -22,7 +22,7 @@ import tk.housem8.housem8.entities.CostFamily;
 @CrossOrigin
 public interface CostFamilyRepository extends CrudRepository<CostFamily, Integer> {
 
-    @Query("SELECT f FROM CostFamily f WHERE f.activo='A' AND f.fechaBorrado IS NULL")
+    @Query("SELECT f FROM CostFamily f WHERE f.activo=1 AND f.fechaBorrado IS NULL")
     public List<CostFamily> findAllActive();
     
 }

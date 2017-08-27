@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -38,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Cost.findByPeriod", query = "SELECT c FROM Cost c WHERE c.period = :period"),
     @NamedQuery(name = "Cost.findByDatetime", query = "SELECT c FROM Cost c WHERE c.datetime = :datetime"),
     @NamedQuery(name = "Cost.findByHouseId", query = "SELECT c FROM Cost c WHERE c.houseId = :houseId"),
-    @NamedQuery(name = "Cost.findByCommerceId", query = "SELECT c FROM Cost c WHERE c.commerceId = :commerceId"),
+    @NamedQuery(name = "Cost.findByCommerce", query = "SELECT c FROM Cost c WHERE c.commerce = :commerce"),
     @NamedQuery(name = "Cost.findByAmount", query = "SELECT c FROM Cost c WHERE c.amount = :amount")})
 
 public class Cost implements Serializable {
@@ -47,8 +49,7 @@ public class Cost implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Size(max = 45)
@@ -91,7 +92,7 @@ public class Cost implements Serializable {
     @JoinColumn(name = "COMMERCE_id", referencedColumnName = "id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JsonBackReference
-    private Commerce commerceId;
+    private Commerce commerce;
 
 //    @Column(name = "house_id")
 //    private Integer houseId;
@@ -153,12 +154,12 @@ public class Cost implements Serializable {
         this.costFamily = costFamily;
     }
 
-    public Commerce getCommerceId() {
-        return commerceId;
+    public Commerce getCommerce() {
+        return commerce;
     }
 
-    public void setCommerceId(Commerce commerceId) {
-        this.commerceId = commerceId;
+    public void setCommerce(Commerce commerce) {
+        this.commerce = commerce;
     }
 
     /* */

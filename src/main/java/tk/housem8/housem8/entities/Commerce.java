@@ -50,7 +50,6 @@ public class Commerce implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
     @Size(max = 45)
@@ -77,7 +76,7 @@ public class Commerce implements Serializable {
     @Column(name = "activo")
     private boolean activo;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "commerceId",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "commerce",fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Cost> costList;
     

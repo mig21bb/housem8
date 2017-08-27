@@ -21,7 +21,7 @@ import tk.housem8.housem8.entities.CostFamily;
 @CrossOrigin
 public interface CommerceRepository extends CrudRepository<Commerce, Integer> {
 
-    @Query("select cm from Commerce cm where cm.activo='A' and cm.fechaBorrado is null"            )
+    @Query("select cm from Commerce cm where cm.activo=1 and cm.fechaBorrado is null")
     public List<Commerce> findAllActive();
     
 }

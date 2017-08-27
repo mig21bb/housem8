@@ -20,7 +20,7 @@ import tk.housem8.housem8.entities.Cost;
 @CrossOrigin
 public interface CostRepository extends CrudRepository<Cost, Integer> {
 
-    @Query("select c from Cost c where c.mateId.id=:mateId and c.houseId.id=:houseId and c.datetime BETWEEN :startDate AND :endDate"
+    @Query("select c from Cost c where c.mateId.id=:mateId and c.houseId.id=:houseId and c.datetime BETWEEN :startDate AND :endDate order by c.datetime"
             )
     public List<Cost> findByMateAndHouse(@Param("mateId") Integer mateId,
                                          @Param("houseId") Integer houseId,
