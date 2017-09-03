@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import tk.housem8.housem8.entities.Mate;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-09-03T19:37:43")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-09-03T23:37:28")
 @StaticMetamodel(Compensation.class)
 public class Compensation_ { 
 

@@ -129,18 +129,23 @@ public class WebController {
         try {
 
             mate = getUserMate(httpSession);
-            House userHouse = houseRepository.findByMate(mate.getId());
-            
-            List<House> userHouses = houseRepository.findAllActiveByMaker(mate.getId());
-            
-            if(!userHouses.contains(userHouse)){
-                userHouses.add(userHouse);
+            if (mate.isActivo()) {
+                House userHouse = houseRepository.findByMate(mate.getId());
+
+                List<House> userHouses = houseRepository.findAllActiveByMaker(mate.getId());
+
+                if (!userHouses.contains(userHouse)) {
+                    userHouses.add(userHouse);
+                }
+
+                for (House h : userHouses) {
+                    h.setLivingMates(mateRepository.findByHouse(h.getId()));
+                }
+
+                model.addAttribute("mate", mate);
+                model.addAttribute("userHouse", userHouse);
+                model.addAttribute("userHouses", userHouses);
             }
-
-            model.addAttribute("mate", mate);
-            model.addAttribute("userHouse", userHouse);
-            model.addAttribute("userHouses", userHouses);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -306,24 +311,23 @@ public class WebController {
             @ModelAttribute House newHouse,
             Model model) {
 
-        
         Mate mate = new Mate();
-        Integer response =-1;
+        Integer response = -1;
         try {
 
             mate = getUserMate(httpSession);
-             if (mate.isActivo()) {
+            if (mate.isActivo()) {
 
-            newHouse.setFechaCreacion(new Date());
-            newHouse.setFechaModificacion(new Date());
-            newHouse.setActivo(true);
-            newHouse.setMaker(mate);
-            
-            houseRepository.save(newHouse);
-            
-            response=newHouse.getId();
+                newHouse.setFechaCreacion(new Date());
+                newHouse.setFechaModificacion(new Date());
+                newHouse.setActivo(true);
+                newHouse.setMaker(mate);
 
-             } else {
+                houseRepository.save(newHouse);
+
+                response = newHouse.getId();
+
+            } else {
                 response = new Integer(-1);
             }
         } catch (Exception e) {

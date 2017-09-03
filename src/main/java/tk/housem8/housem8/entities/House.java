@@ -8,6 +8,7 @@ package tk.housem8.housem8.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -26,12 +27,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.springframework.data.annotation.Transient;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import tk.housem8.housem8.repos.HouseRepository;
+import tk.housem8.housem8.repos.MateRepository;
 
 /**
  *
@@ -54,7 +58,9 @@ import tk.housem8.housem8.repos.HouseRepository;
     @NamedQuery(name = "House.findBySquareMeters", query = "SELECT h FROM House h WHERE h.squareMeters = :squareMeters")})
 public class House implements Serializable {
     
-    
+    @Transient
+    @Autowired
+    MateRepository mateRepository;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -113,7 +119,8 @@ public class House implements Serializable {
     @JsonBackReference
     private Mate maker;
     
-    @Transient
+    
+    @Transient    
     @JsonBackReference
     private List<Mate> livingMates;
 
@@ -122,6 +129,12 @@ public class House implements Serializable {
 
     public House(Integer id) {
         this.id = id;
+        try{
+            this.livingMates = mateRepository.findByHouse(id);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
     }
 
     public House(Integer id, String city, String street, float squareMeters) {
@@ -274,14 +287,17 @@ public class House implements Serializable {
     @XmlTransient
     public List<Mate> getLivingMates(){
         
-        return this.livingMates;      
-        
+       
+       
+        return this.livingMates;  
     }
     
     
     public void setLivingMates(List<Mate> livingMates) {
         this.livingMates = livingMates;
     }
+    
+    
     
     
 

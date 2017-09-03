@@ -25,7 +25,7 @@ public interface MateRepository extends CrudRepository<Mate, Integer> {
     @Query("select m from Mate m where m.email = :email")
     public Mate findByEmail(@Param("email") String email);
         
-     @Query("SELECT m FROM Mate m"
+    @Query("SELECT m FROM Mate m"
              + " left JOIN m.ocupationList o JOIN o.room r JOIN r.houseId h"
              + " WHERE o.startDate < CURRENT_DATE and (o.endDate > CURRENT_DATE or o.endDate is null) and  h.id=:houseId"
             )

@@ -121,8 +121,8 @@
                 </div>
               </div>
               <div class="mdl-card__actions mdl-card--border">
-                <span class="mdl-chip">
-                  <span class="mdl-chip__text">Basic Chip</span>
+                <span th:each="mate:*{userHouse.livingMates}" class="mdl-chip">
+                  <span  th:text="*{mate.name}" class="mdl-chip__text">Basic Chip</span>
                 </span>
               </div>
             
