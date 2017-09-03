@@ -9,7 +9,7 @@ import tk.housem8.housem8.entities.House;
 import tk.housem8.housem8.entities.Ocupation;
 import tk.housem8.housem8.entities.RoomClass;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-08-18T03:33:40")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-09-03T19:37:43")
 @StaticMetamodel(Room.class)
 public class Room_ { 
 

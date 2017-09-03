@@ -27,4 +27,25 @@ public interface CostRepository extends CrudRepository<Cost, Integer> {
                                          @Param("startDate") Date startDate,
                                          @Param("endDate") Date endDate);
     
+    @Query("select c from Cost c where c.houseId.id=:houseId and c.datetime BETWEEN :startDate AND :endDate order by c.datetime"
+            )
+    public List<Cost> findByHouse(       @Param("houseId") Integer houseId,
+                                         @Param("startDate") Date startDate,
+                                         @Param("endDate") Date endDate);
+    
+    @Query("select c from Cost c where c.costFamily.id=:costFamilyId and c.houseId.id=:houseId and c.datetime BETWEEN :startDate AND :endDate order by c.datetime"
+            )
+    public List<Cost> findByHouseAndCostFamily(@Param("costFamilyId") Integer costFamilyId,
+                                         @Param("houseId") Integer houseId,
+                                         @Param("startDate") Date startDate,
+                                         @Param("endDate") Date endDate);
+    
+     @Query("select c from Cost c where c.mateId.id=:mateId and c.costFamily.id=:costFamilyId and c.houseId.id=:houseId and c.datetime BETWEEN :startDate AND :endDate order by c.datetime"
+            )
+    public List<Cost> findByHouseAndMateAndCostFamily(@Param("mateId") Integer mateId,
+                                         @Param("costFamilyId") Integer costFamilyId,
+                                         @Param("houseId") Integer houseId,
+                                         @Param("startDate") Date startDate,
+                                         @Param("endDate") Date endDate);
+    
 }

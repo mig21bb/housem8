@@ -49,25 +49,13 @@ $('form[id=newCostForm]').submit(function(event){
 
 });
 
-$('#newComerce').click(function(){
+$('form[id=newHouseForm]').submit(function(event){
 
-});
-
-function introNew(obj){
-    $('#new_'+obj).show();
-    $('#new_element').prop('disabled', true);
-    
-}
-
-$('form[id=newCommerce]').submit(function(event){
-
-	event.preventDefault();
-	var amount = $(this).find("input[name='amount']").val()
-	$(this).find("input[name='amount']").val(amount.replace(',','.'));
-	console.log("submitting newCostForm");
+	event.preventDefault();		
+	console.log("submitting newHouseForm");
 	$.ajax({
 			method: "POST",
-			url: "/newCost",
+			url: "/newHouse",
 			data: $(this).serialize(),		
 			error: function(xhr,error){
 		   	console.log("error on ajax call: "+xhr);
@@ -80,6 +68,76 @@ $('form[id=newCommerce]').submit(function(event){
 		   			alert("Error al crear el nuevo gasto.")
 		   		}
 		   	
+		   }
+		   
+		   
+	});
+	
+
+});
+
+$('#newCommerce').click(function(){
+	$('#newCommerceDiv').show();
+});
+
+function introNew(obj){
+    $('#new_'+obj).show();
+    $('#new_element').prop('disabled', true);
+    
+}
+
+$('form[id=newCommerceForm]').find('input[name="name"]').focusout(function(){
+	$('#iconList').empty();
+	var search = "https://www.googleapis.com/customsearch/v1?key=AIzaSyAuEqf3JOyr0sLDB4dVJOFHFThIl22BpvQ&cx=011400033356399962413:n4tvoyv9ghi&searchType=image&q="+$(this).val()+"%2Blogo&oq";
+	$.ajax({
+			method: "GET",
+			url: search,			
+			error: function(xhr,error){
+		   	console.log("error on ajax call: "+xhr);
+		   },
+		   success:function(response){
+		   	
+		   		console.log(response.items);
+		   		
+		   	
+		   },
+		   complete:function(response){
+		   	if(response.responseJSON.items.length>0){
+			   		for(var i=0;i<5;i++){
+
+			   			$('#iconList').append('<li class="mdl-menu__item"><img style="height: inherit" src="'+response.responseJSON.items[i].image.thumbnailLink+'"/></li>');
+			   		}
+			   	}
+			   	$('#iconList li').click(function(){
+					console.log($(this).find("img").attr("src"));
+					$('form[id=newCommerceForm]').find('input[name="logo"]').val($(this).find("img").attr("src"));
+					$('#newCommerceHeader').attr("src",$(this).find("img").attr("src"));
+				});
+
+		   }
+		   
+		   
+	});
+});
+
+
+$('form[id=newCommerceForm]').submit(function(event){
+
+	event.preventDefault();	
+	//AIzaSyAuEqf3JOyr0sLDB4dVJOFHFThIl22BpvQ
+	//https://www.googleapis.com/customsearch/v1?key=AIzaSyAuEqf3JOyr0sLDB4dVJOFHFThIl22BpvQ&cx=011400033356399962413:n4tvoyv9ghi&q=simply
+	$.ajax({
+			method: "POST",
+			url: "/newCommerce",
+			data: $(this).serialize(),		
+			error: function(xhr,error){
+		   	console.log("error on ajax call: "+xhr);
+		   },
+		   success:function(response){
+		   	console.log(response);
+		   	$('#newCommerceDiv').hide();
+		   		$('#newCostForm select[name=commerce]').empty();
+		   		$('#newCostForm select[name=commerce]').append(response);
 		   }
 		   
 		   

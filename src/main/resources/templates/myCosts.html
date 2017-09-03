@@ -22,16 +22,16 @@
     <title>housem8</title>
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes"/>
-    <link rel="icon" sizes="192x192" href="css/images/android-desktop.png"/>
+    <link rel="icon" sizes="192x192" href="/css/images/android-desktop.png"/>
     <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="apple-mobile-web-app-title" content="Material Design Lite"/>
     <link rel="apple-touch-icon-precomposed" href="css/images/ios-desktop.png"/>
     <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="css/images/touch/ms-touch-icon-144x144-precomposed.png"/>
+    <meta name="msapplication-TileImage" content="/css/images/touch/ms-touch-icon-144x144-precomposed.png"/>
     <meta name="msapplication-TileColor" content="#3372DF"/>
-    <link rel="shortcut icon" href="css/images/favicon.png"/>
+    <link rel="shortcut icon" href="/css/images/favicon.png"/>
     <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
     <!--
     <link rel="canonical" href="http://www.example.com/">
@@ -43,7 +43,7 @@
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.css"/>
     <link rel="stylesheet" href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"/>
     
-    <link rel="stylesheet" href="css/styles.css" data-version="2003"/>
+    <link rel="stylesheet" href="/css/styles.css" data-version="2003"/>
     <style>
     #new_element {
     position: fixed;
@@ -83,7 +83,9 @@
             <div th:replace="costs :: costsList"></div>
           </th:block>
           <th:block  th:if="${mate.activo}">
-            <div th:replace="costs :: newCost"  style="display: none"></div>
+            <div th:replace="costs :: newCost" style="display: none">              
+            </div>
+            
           </th:block>
         </div>
        
@@ -102,7 +104,7 @@
     <script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
     <script src="/webjars/jQuery-Timepicker-Addon/1.4.5/jquery-ui-timepicker-addon.min.js"></script>
     <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
-    <script src="js/index.js" data-version="2003"></script>
+    <script src="/js/index.js" data-version="2003"></script>
      <script>
       $('#newCostDateTime').datetimepicker({
         

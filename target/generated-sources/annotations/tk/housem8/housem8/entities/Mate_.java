@@ -7,9 +7,10 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import tk.housem8.housem8.entities.Compensation;
 import tk.housem8.housem8.entities.Cost;
+import tk.housem8.housem8.entities.House;
 import tk.housem8.housem8.entities.Ocupation;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-08-18T03:33:40")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-09-03T19:37:43")
 @StaticMetamodel(Mate.class)
 public class Mate_ { 
 
@@ -28,6 +29,7 @@ public class Mate_ {
     public static volatile ListAttribute<Mate, Compensation> compensationList1;
     public static volatile SingularAttribute<Mate, String> user;
     public static volatile SingularAttribute<Mate, String> email;
+    public static volatile ListAttribute<Mate, House> createdHousesList;
     public static volatile SingularAttribute<Mate, Boolean> activo;
     public static volatile ListAttribute<Mate, Compensation> compensationList;
 

@@ -7,7 +7,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import tk.housem8.housem8.entities.Mate;
 import tk.housem8.housem8.entities.Room;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-08-18T03:33:40")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-09-03T19:37:43")
 @StaticMetamodel(Ocupation.class)
 public class Ocupation_ { 
 

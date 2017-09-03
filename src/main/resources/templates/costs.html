@@ -41,7 +41,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.css"/>
-    <link rel="stylesheet" href="css/styles.css" data-version="2003"/>
+    <link rel="stylesheet" href="/css/styles.css" data-version="2003"/>
     <style>
     #view-source {
     position: fixed;
@@ -79,16 +79,47 @@
           <div th:fragment="costsList" class="houseCard mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
             <div class="mdl-card__title">
               <h2 th:text="${userHouse.street}+' '+${userHouse.number}+','+${userHouse.city}+'/ '+#{costs}" class="mdl-card__title-text">Welcome</h2>
-              <select name="mes" id="costsMonth">
-                <option th:each="period : ${period}" value="">
-                  
-                </option>
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
-              </select>
+              <button id="period-list"
+              class="mdl-button mdl-js-button mdl-button--raised">
+              <span th:text="${period}">201706<i class="material-icons">more_vert</i></span>
+              </button>
+              <ul id="periodList" class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
+                for="period-list">
+
+                <li th:each="fullyear: ${fullYear}" class="mdl-menu__item">
+                  <a  th:text="${fullyear}" th:selected="${fullyear==period}"
+                   th:href="@{'/myCosts/'+${fullyear}+'/'+ ${selectedMate.id}+'/'+${selectedCostFamily.id}}"></a>
+                </li>
+                
+              </ul>
+              <span id="mates-menu"
+                class="mdl-button mdl-js-button mdl-button--raised">
+                <span th:text="${selectedMate != null} ? ${selectedMate.name} :#{see_all}">201706<i class="material-icons">more_vert</i></span>
+              </span>
+              <ul id="mates-List" class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
+                for="mates-menu">
+                <li>
+                   <a  th:text="#{see_all}" th:href="@{'/myCosts/'+${period}+'/0/'+${selectedCostFamily.id}}"></a>
+                </li>
+                <li th:each="houseOfMates: ${houseOfMates}" class="mdl-menu__item">
+                  <a  th:text="*{houseOfMates.name}" th:href="@{'/myCosts/'+${period}+'/'+*{houseOfMates.id}+'/'+${selectedCostFamily.id}}"></a>
+                </li>
+                
+              </ul>
+               <span id="costFamily-menu"
+                class="mdl-button mdl-js-button mdl-button--raised">
+                <span th:text="${selectedCostFamily?.id != null} ? ${selectedCostFamily.name} :#{see_all}">201706<i class="material-icons">more_vert</i></span>
+              </span>
+              <ul id="costFamily-List" class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
+                for="costFamily-menu">
+                <li>
+                   <a  th:text="#{see_all}" th:href="@{'/myCosts/'+${period}+'/'+${selectedMate.id}+'/0'}"></a>
+                </li>
+                <li th:each="costFamily : ${costFamily}" class="mdl-menu__item">
+                  <a  th:text="*{costFamily.name}" th:href="@{'/myCosts/'+${period}+'/'+${selectedMate.id}+'/'+*{costFamily.id}}"></a>
+                </li>
+                
+              </ul>
             </div>
             
             <div class="mdl-card__supporting-text">
@@ -96,7 +127,7 @@
                 <thead>
                   <tr>
                     <th  class="mdl-data-table__cell--non-numeric">Tipo</th>
-                    <th class="mdl-data-table__cell--non-numeric">Fecha</th>                    
+                    <th class="mdl-data-table__cell--non-numeric">Fecha</th>
                     <th >Importe</th>
                     <th  class="mdl-data-table__cell--non-numeric">Proveedor</th>
                     <th  class="mdl-data-table__cell--non-numeric">Mate</th>
@@ -104,8 +135,8 @@
                 </thead>
                 <tbody>
                   <tr th:each="cost : ${costs}">
-                    <td th:text="${cost.costFamily.description}" th:title="${cost.description}"  class="mdl-data-table__cell--non-numeric">Comida-Limpieza</td>                    
-                    <td th:text="${cost.datetime}" class="mdl-data-table__cell--non-numeric">2017-08-3</td>                    
+                    <td th:text="${cost.costFamily.description}" th:title="${cost.description}"  class="mdl-data-table__cell--non-numeric">Comida-Limpieza</td>
+                    <td th:text="${cost.datetime}" class="mdl-data-table__cell--non-numeric">2017-08-3</td>
                     <td th:text="${cost.amount}+' €'">2.90€</td>
                     <td ><img class="commerce_logo" th:src="${cost.commerce.logo}" th:alt="${cost.commerce.name}"/>
                     </td>
@@ -135,23 +166,24 @@
               </a>
             </div>
           </div>
-          <div th:fragment="newCost" id="new_cost"  class="houseCard mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+          <div th:fragment="newCost" id="new_cost"  style="display: none" class="houseCard mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
             <div class="mdl-card__title">
               <h2 class="mdl-card__title-text">New Cost</h2>
             </div>
-            <div class="mdl-card__supporting-text">
-              <form class="mdl-card__supporting-text" id="newCostForm" action="#" th:action="@{/newCost}" th:object="${cost}" method="post" >
-                
-                <div class="mdl-cell--8-col">
+            <div class="mdl-card__supporting-text mdl-grid">
+              <div class="mdl-cell--8-col">
+                <form  id="newCostForm" action="#" th:action="@{/newCost}" th:object="${cost}" method="post" >
+                  
+                  
                   <div class="mdl-textfield mdl-js-textfield mdl-cell--3-col">
                     <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" pattern="-?[0-9]*([.,]?[0-9]+)?" name="amount" required="required"/>
                     <label th:text="#{amount}" class="mdl-textfield__label mdl-color-text--grey-600" for="floor">Amount </label>
                     <span th:text="#{incorrect_number}" class="mdl-textfield__error">Input is not a number!</span>
                   </div>
-                    <div  class="mdl-textfield mdl-js-textfield mdl-cell--1-col">
+                  <div  class="mdl-textfield mdl-js-textfield mdl-cell--1-col">
                     <span class="mdl-textfield__input mdl-color-text--grey-600" th:text="#{coin}">€</span>
                   </div>
-                  <div class="mdl-textfield mdl-js-textfield mdl-cell--9-col">
+                  <div class="mdl-textfield mdl-js-textfield mdl-cell--8-col">
                     <select class="mdl-textfield__input mdl-color-text--grey-600" name="costFamily"  th:field="*{costFamily}"  required="required">
                       <option th:each="costFamily : ${costFamily}" th:text="${costFamily.name}" th:selected="${costFamily.id==1}" th:value="${costFamily.id}">Groceries</option>
                       
@@ -160,7 +192,7 @@
                       <option th:remove="all" value="150">Half year</option>
                     </select>
                   </div>
-                 
+                  
                   <div class="mdl-textfield mdl-js-textfield mdl-cell--6-col">
                     <select class="mdl-textfield__input mdl-color-text--grey-600" th:field="*{period}" name="period">
                       <option value="" selected="true">Occasional</option>
@@ -174,34 +206,86 @@
                   </div>
                   <div class="mdl-textfield mdl-js-textfield mdl-cell--6-col">
                     <input id="newCostDateTime" class="mdl-textfield__input mdl-color-text--grey-600" type="text"
-                     value="${#dates.format(#dates.createNow(), 'dd/MMM/yyyy HH:mm')}" th:field="*{datetime}" name="datetime" required="required"/>
+                    value="${#dates.format(#dates.createNow(), 'dd/MMM/yyyy HH:mm')}" th:field="*{datetime}" name="datetime" required="required"/>
+                    
+                  </div>
+                  <div class="mdl-cell--12-col  mdl-cell  mdl-grid">
+                    <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--6-col">
+                      
+                      <label th:text="#{commerce}" class=" mdl-textfield__label mdl-color-text--grey-600" for="floor">Commerce</label>
+                      <select class="mdl-textfield__input mdl-color-text--grey-600" name="commerce" th:field="*{commerce}" required="required">
+                        
+                        <option th:each="commerce : ${commerce}" th:text="${commerce.name}" th:selected="${commerce.id==1}" th:value="${commerce.id}">Groceries</option>
+                        <option th:remove="all" value="2">Petrol</option>
+                        <option th:remove="all" value="3">Each 3 months</option>
+                        <option th:remove="all" value="150">Half year</option>
+                      </select>
+                    </div>
+                    <div class="mdl-cell mdl-cell--4-col" >
+                      <span id="newCommerce" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" th:title="#{new_commerce}">
+                        <i class="material-icons">add</i>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
+                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" th:field="*{description}" name="description" />
+                    <label th:text="#{description}" class="mdl-textfield__label mdl-color-text--grey-600" for="country">Descripcion</label>
                     
                   </div>
                   
                   
-                
-                  <div class="mdl-textfield mdl-js-textfield mdl-cell--6-col">
-                    <label th:text="#{commerce}" class="mdl-textfield__label mdl-color-text--grey-600" for="floor">Commerce</label>
-                    <select class="mdl-textfield__input mdl-color-text--grey-600" name="commerce" th:field="*{commerce}" required="required">
-                      
-                      <option th:each="commerce : ${commerce}" th:text="${commerce.name}" th:selected="${commerce.id==1}" th:value="${commerce.id}">Groceries</option>
-                      <option th:remove="all" value="2">Petrol</option>
-                      <option th:remove="all" value="3">Each 3 months</option>
-                      <option th:remove="all" value="150">Half year</option>
-                    </select>
-                    <span class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
-                      <i class="material-icons">add</i>
-                    </span>
-                  </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-cell--12-col">
-                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" th:field="*{description}" name="description" />
-                    <label th:text="#{description}" class="mdl-textfield__label mdl-color-text--grey-600" for="country">Descripcion</label>
-                  </div>
+                  <input th:value="#{save}" type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"/>
+                </form>
+              </div>
+              <div id="newCommerceDiv" class="mdl-grid mdl-cell--4-col"  style="display: none">
+                <form id="newCommerceForm" action="#" th:object="${commerce}" method="post" >
                   
-                </div>
-                <input th:value="#{save}" type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"/>
-              </form>
-              
+                  <div class="mdl-grid">
+                    <img id="newCommerceHeader" src=""/>
+                    <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--10-col">
+                      <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" id="commerceName"  name="name" required="required"/>
+                      <label th:text="#{name}" class="mdl-textfield__label mdl-color-text--grey-600" for="floor">Amount </label>
+                    </div>
+                    <div class=" mdl-cell mdl-cell--2-col">
+                      <!-- Right aligned menu below button -->
+                      <span id="icon-menu"
+                        class="mdl-button mdl-js-button mdl-button--icon">
+                        <i class="material-icons">more_vert</i>
+                      </span>
+                      <ul id="iconList" class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
+                        for="icon-menu">
+                        
+                        
+                      </ul>
+                      
+                    </div>
+                    <input type="hidden" name="logo"  value=""/>
+                    <select class="mdl-textfield__input mdl-cell mdl-cell--12-col mdl-color-text--grey-600" name="costFamily" >
+                      <option value=""></option>
+                      <option th:each="costFamily : ${costFamily}" th:text="${costFamily.name}"  th:value="${costFamily.id}">Groceries</option>
+                      <option th:remove="all" value="2">Petrol</option>
+                      <option th:remove="all" value="3">food</option>
+                      <option th:remove="all" value="150">savings</option>
+                    </select>
+                    
+                    
+                    
+                    <div  class="mdl-cell--4-col" style="display: none">
+                      <style>
+                      #map {
+                      height: 400px;
+                      width: 100%;
+                      }
+                      </style>
+                      <div id="map"></div>
+                      
+                    </div>
+                  </div>
+                  <div class="mdl-card__actions mdl-card--border">
+                    <input type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"/>
+                  </div>
+                </form>
+              </div>
             </div>
             <div class="mdl-card__actions mdl-card--border">
               
@@ -210,86 +294,7 @@
             </div>
             
           </div>
-          <div th:fragment="newCommerce" id="new_commerce"  style="display: none" class="houseCard mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-            <div class="mdl-card__title">
-              <h2 class="mdl-card__title-text">New Cost</h2>
-            </div>
-            <form id="newCostForm" action="#" th:action="@{/newCost}" th:object="${cost}" method="post" >
-              <div class="mdl-card__supporting-text">
-                <div class="mdl-cell--8-col">
-                  <div class="mdl-textfield mdl-js-textfield mdl-cell--6-col">
-                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="amount"/>
-                    <label th:text="#{amount}+#{coin}" class="mdl-textfield__label mdl-color-text--grey-600" for="floor">Amount </label>
-                  </div>
-                  <div class="mdl-textfield mdl-js-textfield mdl-cell--6-col">
-                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" th:field="*{description}" name="description"/>
-                    <label th:text="#{description}" class="mdl-textfield__label mdl-color-text--grey-600" for="country">Descripcion</label>
-                  </div>
-                  <select class="mdl-textfield__input mdl-color-text--grey-600" name="costFamily"  th:field="*{costFamily}">
-                    <option value=""></option>
-                    <option th:each="costFamily : ${costFamily}" th:text="${costFamily.name}"  th:value="${costFamily.id}">Groceries</option>
-                    <option th:remove="all" value="2">Petrol</option>
-                    <option th:remove="all" value="3">Each 3 months</option>
-                    <option th:remove="all" value="150">Half year</option>
-                  </select>
-                  <div class="mdl-textfield mdl-js-textfield mdl-cell--6-col">
-                    <input id="newCostDateTime" class="mdl-textfield__input mdl-color-text--grey-600" type="text" th:field="*{datetime}" name="datetime"/>
-                    <!--label th:text="#{datetime}" class="mdl-textfield__label mdl-color-text- -grey-600" for="street">Date and time </label-->
-                  </div>
-                  <div class="mdl-textfield mdl-js-textfield mdl-cell--6-col">
-                    <select class="mdl-textfield__input mdl-color-text--grey-600" th:field="*{period}" name="period">
-                      <option value=""></option>
-                      <option value="">Not periodly</option>
-                      <option value="30">Monthly</option>
-                      <option value="60">Each 2 months</option>
-                      <option value="120">Each 3 months</option>
-                      <option value="150">Half year</option>
-                      <option value="365">Yearly</option>
-                    </select>
-                    
-                    <label th:text="#{period}" class="mdl-textfield__label mdl-color-text--grey-600" for="period">Period (days)</label>
-                  </div>
-                  <div class="mdl-textfield mdl-js-textfield mdl-cell--6-col">
-                    <input id="newCostDateTime" class="mdl-textfield__input mdl-color-text--grey-600" type="text" th:field="*{datetime}" name="datetime"/>
-                    <!--label th:text="#{datetime}" class="mdl-textfield__label mdl-color-text- -grey-600" for="street">Date and time </label-->
-                  </div>
-                  
-                  
-                  <div class="mdl-textfield mdl-js-textfield mdl-cell--6-col">
-                    <label th:text="#{commerce}" class="mdl-textfield__label mdl-color-text--grey-600" for="floor">Commerce</label>
-                    <select class="mdl-textfield__input mdl-color-text--grey-600" name="commerce" th:field="*{commerce}">
-                      <option value=""></option>
-                      <option th:text="#{new}+' '+#{commerce}" value="0">New Commerce</option>
-                      <option th:each="commerce : ${commerce}" th:text="${commerce.name}"  th:value="${commerce.id}">Groceries</option>
-                      <option th:remove="all" value="2">Petrol</option>
-                      <option th:remove="all" value="3">Each 3 months</option>
-                      <option th:remove="all" value="150">Half year</option>
-                    </select>
-                    
-                    
-                  </div>
-                  
-                </div>
-                <div>
-                  <style>
-                  #map {
-                  height: 400px;
-                  width: 100%;
-                  }
-                  </style>
-                  <div id="map"></div>
-                  
-                </div>
-              </div>
-              <div class="mdl-card__actions mdl-card--border">
-                <input type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                Save
-                </input>
-              </div>
-            </form>
-            
-            
-          </div>
+          
         </div>
         
         
@@ -305,7 +310,7 @@
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
     <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
-    <script src="js/index.js" data-version="2003"></script>
+    <script src="/js/index.js" data-version="2003"></script>
     <script>
     function initMap() {
     var uluru = {lat: -25.363, lng: 131.044};

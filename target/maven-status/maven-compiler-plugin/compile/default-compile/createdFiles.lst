@@ -34,3 +34,4 @@ tk\housem8\housem8\repos\RoomRepository.class
 tk\housem8\housem8\WebSecurityConfiguration$2.class
 tk\housem8\housem8\entities\Pictures.class
 tk\housem8\housem8\repos\CommerceRepository.class
+tk\housem8\housem8\pojos\Period.class

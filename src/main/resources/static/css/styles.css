@@ -218,3 +218,7 @@ _:-ms-input-placeholder, :root .demo-graph {
 .commerce_logo{
   max-height: 2em;
 }
+
+li.mdl-menu__item img{
+  height: inherit;
+ }

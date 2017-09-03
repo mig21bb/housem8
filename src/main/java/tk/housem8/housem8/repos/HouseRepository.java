@@ -6,6 +6,7 @@
 package tk.housem8.housem8.repos;
 
 import java.util.Date;
+import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -26,5 +27,9 @@ public interface HouseRepository extends CrudRepository<House, Integer> {
             + "WHERE o.startDate < CURRENT_DATE and (o.endDate > CURRENT_DATE or o.endDate is null) and  m.id= :mateId"
             )
     public House findByMate(@Param("mateId") Integer mateId);
+
+    
+     @Query("SELECT h FROM House h where h.maker.id= :mateId")
+    public List<House> findAllActiveByMaker(@Param("mateId") Integer mateId);
     
 }

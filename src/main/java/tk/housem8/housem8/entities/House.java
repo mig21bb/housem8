@@ -5,6 +5,7 @@
  */
 package tk.housem8.housem8.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
@@ -17,6 +18,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -27,6 +30,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.data.annotation.Transient;
+import tk.housem8.housem8.repos.HouseRepository;
 
 /**
  *
@@ -48,6 +53,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "House.findByOther", query = "SELECT h FROM House h WHERE h.other = :other"),
     @NamedQuery(name = "House.findBySquareMeters", query = "SELECT h FROM House h WHERE h.squareMeters = :squareMeters")})
 public class House implements Serializable {
+    
+    
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -84,7 +91,7 @@ public class House implements Serializable {
     @NotNull
     @Column(name = "square_meters")
     private float squareMeters;    
-     @Column(name = "fecha_creacion")
+    @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
     @Column(name = "fecha_modificacion")
@@ -101,6 +108,14 @@ public class House implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "houseId",fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Room> roomList;
+    @JoinColumn(name = "maker_id", referencedColumnName = "id")
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Mate maker;
+    
+    @Transient
+    @JsonBackReference
+    private List<Mate> livingMates;
 
     public House() {
     }
@@ -176,6 +191,16 @@ public class House implements Serializable {
         return apartment;
     }
 
+    public Mate getMaker() {
+        return maker;
+    }
+
+    public void setMaker(Mate maker) {
+        this.maker = maker;
+    }
+    
+    
+
     public void setApartment(String apartment) {
         this.apartment = apartment;
     }
@@ -245,6 +270,20 @@ public class House implements Serializable {
     public void setRoomList(List<Room> roomList) {
         this.roomList = roomList;
     }
+    
+    @XmlTransient
+    public List<Mate> getLivingMates(){
+        
+        return this.livingMates;      
+        
+    }
+    
+    
+    public void setLivingMates(List<Mate> livingMates) {
+        this.livingMates = livingMates;
+    }
+    
+    
 
     @Override
     public int hashCode() {

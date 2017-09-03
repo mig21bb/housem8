@@ -111,6 +111,9 @@ public class Mate implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "mate",fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Ocupation> ocupationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "maker",fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<House> createdHousesList;
 
     public Mate() {
     }
@@ -258,6 +261,17 @@ public class Mate implements Serializable {
     public void setOcupationList(List<Ocupation> ocupationList) {
         this.ocupationList = ocupationList;
     }
+    
+    @XmlTransient
+    public List<House> getCreatedHousesList() {
+        return createdHousesList;
+    }
+
+    public void setCreatedHousesList(List<House> createdHousesList) {
+        this.createdHousesList = createdHousesList;
+    }
+    
+    
 
     @Override
     public int hashCode() {

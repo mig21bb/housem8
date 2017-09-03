@@ -6,9 +6,10 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import tk.housem8.housem8.entities.Cost;
+import tk.housem8.housem8.entities.Mate;
 import tk.housem8.housem8.entities.Room;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-08-18T03:33:40")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-09-03T19:37:43")
 @StaticMetamodel(House.class)
 public class House_ { 
 
@@ -18,6 +19,7 @@ public class House_ {
     public static volatile SingularAttribute<House, Date> fechaModificacion;
     public static volatile SingularAttribute<House, String> city;
     public static volatile ListAttribute<House, Cost> costList;
+    public static volatile SingularAttribute<House, Mate> maker;
     public static volatile SingularAttribute<House, Date> fechaBorrado;
     public static volatile SingularAttribute<House, String> cp;
     public static volatile SingularAttribute<House, Integer> number;

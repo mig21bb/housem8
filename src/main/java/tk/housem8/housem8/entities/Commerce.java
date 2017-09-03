@@ -64,6 +64,7 @@ public class Commerce implements Serializable {
     @JoinColumn(name = "cost_family", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CostFamily costFamily;
+    
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
