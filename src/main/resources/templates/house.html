@@ -119,13 +119,30 @@
                   <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="square_meters" th:value="*{userHouse.squareMeters}" disabled="disabled"/>
                   <label  th:text="#{square_meters}" class="mdl-textfield__label mdl-color-text--grey-600" for="square_meters">Número </label>
                 </div>
+                 <div class="mdl-textfield mdl-js-textfield  mdl-textfield--floating-label mdl-cell--6-col">
+                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="square_meters"  th:value="${#lists.size(userHouse.roomList)}" disabled="disabled"/>
+                    <label  th:text="#{rooms}" class="mdl-textfield__label mdl-color-text--grey-600" for="square_meters">Número Habitaciones </label>
+                  </div>
               </div>
-              <div class="mdl-card__actions mdl-card--border">
+              <div class="mdl-card__actions mdl-card--border ">
+              <div class="mdl-cell--12-col">
                 <span th:each="mate:*{userHouse.livingMates}" class="mdl-chip">
                   <span  th:text="*{mate.name}" class="mdl-chip__text">Basic Chip</span>
                 </span>
+                </div>
+                 <div class="mdl-cell--12-col">
+                <a th:text="#{move}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="">
+                  
+                </a>
+                 <a th:text="#{edit}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="">
+                  
+                </a>
+                 <a th:text="#{remove}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="">
+                  
+                </a>
+                </div>
               </div>
-            
+              
               <div>
                 <style>
                 #map {
@@ -148,19 +165,19 @@
               <div class="mdl-card__supporting-text">
                 <div class="mdl-cell--12-col">
                   <div class="mdl-textfield mdl-js-textfield  mdl-textfield--floating-label mdl-cell--6-col">
-                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="country"/>
+                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="country"  required="required" />
                     <label th:text="#{country}" class="mdl-textfield__label mdl-color-text--grey-600" for="country">Pais </label>
                   </div>
                   <div class="mdl-textfield mdl-js-textfield  mdl-textfield--floating-label mdl-cell--6-col">
-                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="city"/>
+                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="city"  required="required" />
                     <label th:text="#{city}" class="mdl-textfield__label mdl-color-text--grey-600" for="city">Ciudad </label>
                   </div>
                   <div class="mdl-textfield mdl-js-textfield  mdl-textfield--floating-label mdl-cell--6-col">
-                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="street"/>
+                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="street" required="required" />
                     <label th:text="#{street}" class="mdl-textfield__label mdl-color-text--grey-600" for="street">Calle </label>
                   </div>
                   <div class="mdl-textfield mdl-js-textfield  mdl-textfield--floating-label mdl-cell--6-col">
-                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="number"/>
+                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="number" required="required" />
                     <label th:text="#{number}" class="mdl-textfield__label mdl-color-text--grey-600" for="number">Número </label>
                   </div>
                   <div class="mdl-textfield mdl-js-textfield  mdl-textfield--floating-label mdl-cell--6-col">
@@ -172,7 +189,7 @@
                     <label th:text="#{apartment}" class="mdl-textfield__label mdl-color-text--grey-600" for="apartment">Ciudad </label>
                   </div>
                   <div class="mdl-textfield mdl-js-textfield  mdl-textfield--floating-label mdl-cell--6-col">
-                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="cp"/>
+                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="cp" required="required" />
                     <label th:text="#{cp}" class="mdl-textfield__label mdl-color-text--grey-600" for="cp">Calle </label>
                   </div>
                   <div class="mdl-textfield mdl-js-textfield  mdl-textfield--floating-label mdl-cell--6-col">
@@ -180,9 +197,10 @@
                     <label th:text="#{other}" class="mdl-textfield__label mdl-color-text--grey-600" for="other">Número </label>
                   </div>
                   <div class="mdl-textfield mdl-js-textfield  mdl-textfield--floating-label mdl-cell--6-col">
-                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="text" name="square_meters"/>
-                    <label th:text="#{square_meters}" class="mdl-textfield__label mdl-color-text--grey-600" for="square_meters">Número </label>
+                    <input class="mdl-textfield__input mdl-color-text--grey-600" type="number" name="squareMeters" required="required" />
+                    <label th:text="#{squareMeters}" class="mdl-textfield__label mdl-color-text--grey-600" for="square_meters">Número </label>
                   </div>
+
                 </div>
                 <div>
                   <style>
