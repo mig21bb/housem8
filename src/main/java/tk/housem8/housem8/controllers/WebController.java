@@ -133,18 +133,21 @@ public class WebController {
                 House userHouse = houseRepository.findByMate(mate.getId());
 
                 List<House> userHouses = houseRepository.findAllActiveByMaker(mate.getId());
-
-                if (!userHouses.contains(userHouse)) {
-                    userHouses.add(userHouse);
+                if (userHouses.size() > 0) {
+                    if (userHouse!=null && !userHouses.contains(userHouse)) {
+                        userHouses.add(userHouse);
+                    }
+                     model.addAttribute("userHouses", userHouses);
                 }
-
-                for (House h : userHouses) {
-                    h.setLivingMates(mateRepository.findByHouse(h.getId()));
+                if (userHouse != null) {
+                    for (House h : userHouses) {
+                        h.setLivingMates(mateRepository.findByHouse(h.getId()));
+                    }
+                     model.addAttribute("userHouse", userHouse);
                 }
-
                 model.addAttribute("mate", mate);
-                model.addAttribute("userHouse", userHouse);
-                model.addAttribute("userHouses", userHouses);
+               
+               
             }
         } catch (Exception e) {
             e.printStackTrace();
