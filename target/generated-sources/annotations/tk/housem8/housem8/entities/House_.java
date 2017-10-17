@@ -9,7 +9,7 @@ import tk.housem8.housem8.entities.Cost;
 import tk.housem8.housem8.entities.Mate;
 import tk.housem8.housem8.entities.Room;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-09-03T23:37:28")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-09-10T23:56:17")
 @StaticMetamodel(House.class)
 public class House_ { 
 
@@ -25,7 +25,6 @@ public class House_ {
     public static volatile SingularAttribute<House, Integer> number;
     public static volatile SingularAttribute<House, String> street;
     public static volatile SingularAttribute<House, Date> fechaCreacion;
-    public static volatile ListAttribute<House, Mate> livingMates;
     public static volatile SingularAttribute<House, Integer> id;
     public static volatile SingularAttribute<House, Integer> floor;
     public static volatile SingularAttribute<House, String> apartment;

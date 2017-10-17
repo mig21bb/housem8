@@ -9,7 +9,7 @@ import tk.housem8.housem8.entities.CostFamily;
 import tk.housem8.housem8.entities.House;
 import tk.housem8.housem8.entities.Mate;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-09-03T23:37:28")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-09-10T23:56:17")
 @StaticMetamodel(Cost.class)
 public class Cost_ { 
 

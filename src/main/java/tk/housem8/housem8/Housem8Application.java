@@ -45,9 +45,6 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
     @Autowired
     MateRepository mateRepository;
 
-    public void init(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService());
-    }
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
@@ -84,6 +81,11 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
         lci.setParamName("lang");
         return lci;
     }
+    
+    
+    public void init(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService());
+    }
 
     @Bean
     UserDetailsService userDetailsService() {
@@ -115,9 +117,10 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/index")
+        http.authorizeRequests().antMatchers("/")
                 .permitAll().anyRequest().authenticated();
         http.formLogin().loginPage("/login").permitAll();
+        http.formLogin().loginPage("/restLogin").permitAll();
         http.logout().logoutUrl("/logout").permitAll();
         http.logout().logoutSuccessUrl("/login").deleteCookies("JSESSIONID");
         http.httpBasic().and()
